@@ -1,0 +1,6 @@
+{
+  "name": "CARZev",
+  "description": "India's premier electric vehicle discovery, comparison, and exploration platform.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
