@@ -28,4 +28,4 @@ export interface EVModel {
   description: string;
 }
 
-export type PageType = 'home' | 'listings' | 'detail' | 'compare' | 'savings-calc' | 'emi-calc';
+export type PageType = 'home' | 'listings' | 'detail' | 'compare' | 'savings-calc' | 'emi-calc' | 'consultation' | 'privacy' | 'terms';

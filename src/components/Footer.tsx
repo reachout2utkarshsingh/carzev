@@ -89,14 +89,6 @@ export default function Footer({ setCurrentPage, setSelectedCategory }: FooterPr
                   Compare Hub
                 </span>
               </li>
-              <li>
-                <span 
-                  onClick={() => handleNavClick('home')} 
-                  className="cursor-pointer hover:text-white transition-colors"
-                >
-                  Careers Listing
-                </span>
-              </li>
             </ul>
           </div>
 
@@ -104,10 +96,22 @@ export default function Footer({ setCurrentPage, setSelectedCategory }: FooterPr
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 font-sans">Legal</h4>
             <ul className="space-y-2 text-sm text-[#8b919b]">
-              <li><span className="hover:text-white transition-colors cursor-pointer">Privacy Policy</span></li>
-              <li><span className="hover:text-white transition-colors cursor-pointer">Terms of Service</span></li>
-              <li><span className="hover:text-white transition-colors cursor-pointer">Cookie Policy</span></li>
-              <li><span className="hover:text-white transition-colors cursor-pointer">Support Hotline</span></li>
+              <li>
+                <span 
+                  onClick={() => handleNavClick('privacy')}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  Privacy Policy
+                </span>
+              </li>
+              <li>
+                <span 
+                  onClick={() => handleNavClick('terms')}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  Terms and Conditions
+                </span>
+              </li>
             </ul>
           </div>
 
@@ -115,7 +119,7 @@ export default function Footer({ setCurrentPage, setSelectedCategory }: FooterPr
 
         {/* Copy bar */}
         <div className="border-t border-[#414750]/20 mt-16 pt-8 text-center text-xs text-[#8b919b] flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p>© 2026 CARZev Platform. All rights reserved. Registered under DRI.EV group.</p>
+          <p>© 2026 CARZev Platform. All rights reserved.</p>
           <div className="flex gap-4">
             <span className="hover:text-white cursor-pointer select-none">Twitter</span>
             <span className="hover:text-white cursor-pointer select-none">LinkedIn</span>

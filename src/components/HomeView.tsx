@@ -254,35 +254,19 @@ export default function HomeView({
       <section className="bg-[#1a1c20]/65 border-y border-[#414750]/20 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h3 className="text-xs uppercase font-bold tracking-widest text-[#8b919b] mb-10 font-mono">Explore Top Ecosystem Brands</h3>
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-8 items-center justify-center opacity-70">
+          <div className="grid grid-cols-2 md:grid-cols-4 max-w-3xl mx-auto gap-8 items-center justify-center opacity-70">
             <span 
               onClick={() => handlePillClick('cars')} 
               className="text-lg font-extrabold text-[#e2e2e8] hover:text-[#9acbff] cursor-pointer transition-all uppercase tracking-wide px-4"
             >
               TATA
             </span>
-            {/*
-            <span 
-              onClick={() => handlePillClick('scooters')}
-              className="text-lg font-extrabold text-[#e2e2e8] hover:text-[#9acbff] cursor-pointer transition-all uppercase tracking-wide px-4"
-            >
-              OLA
-            </span>
-            */}
             <span 
               onClick={() => handlePillClick('cars')}
               className="text-lg font-extrabold text-[#e2e2e8] hover:text-[#9acbff] cursor-pointer transition-all uppercase tracking-wide px-4"
             >
               HYUNDAI
             </span>
-            {/*
-            <span 
-              onClick={() => handlePillClick('scooters')}
-              className="text-lg font-extrabold text-[#e2e2e8] hover:text-[#9acbff] cursor-pointer transition-all uppercase tracking-wide px-4"
-            >
-              ATHER
-            </span>
-            */}
             <span 
               onClick={() => handlePillClick('cars')}
               className="text-lg font-extrabold text-[#e2e2e8] hover:text-[#9acbff] cursor-pointer transition-all uppercase tracking-wide px-4"
@@ -298,6 +282,7 @@ export default function HomeView({
           </div>
         </div>
       </section>
+
 
       {/* 4. Interactive Benefit / Why CARZev stats cards */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">

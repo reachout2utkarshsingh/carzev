@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Star, Battery, Gauge, Zap, Calendar, Heart, Share2, ClipboardList, ThumbsUp, ThumbsDown, User, Phone, Mail, CheckCircle, ShieldAlert, Calculator, Coins } from 'lucide-react';
 import { EVModel, PageType } from '../types';
+import { addTestDriveRequest } from '../lib/evService';
 
 interface DetailViewProps {
   evId: string;
@@ -167,14 +168,31 @@ export default function DetailView({
 
   const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate API storage
-    localStorage.setItem(`booking_${ev.id}`, JSON.stringify({
-      ...bookingForm,
+    
+    // Call firestore service
+    addTestDriveRequest({
+      name: bookingForm.name,
+      phone: bookingForm.phone,
+      email: bookingForm.email,
+      preferredDate: bookingForm.preferredDate,
       city: selectedCity,
-      evName: ev.name,
-      timestamp: new Date().toISOString()
-    }));
-    setBookingSubmitted(true);
+      evId: ev.id,
+      evName: ev.name
+    })
+    .then(() => {
+      // Save backup to localStorage
+      localStorage.setItem(`booking_${ev.id}`, JSON.stringify({
+        ...bookingForm,
+        city: selectedCity,
+        evName: ev.name,
+        timestamp: new Date().toISOString()
+      }));
+      setBookingSubmitted(true);
+    })
+    .catch((error) => {
+      console.error("Failed to store test drive request in Firestore:", error);
+      alert("Failed to submit request. If your Firestore is in production mode, make sure you temporarily enabled writes in your Firestore rules!");
+    });
   };
 
   return (

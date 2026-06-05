@@ -108,6 +108,15 @@ export default function Navbar({
               >
                 Compare
               </span>
+              <span
+                onClick={() => handleNavClick('consultation')}
+                className={`cursor-pointer text-sm font-semibold tracking-wide transition-colors ${
+                  currentPage === 'consultation' ? 'text-[#9acbff]' : 'text-[#c0c7d1] hover:text-[#9acbff]'
+                }`}
+                id="link-consultation"
+              >
+                Consultation
+              </span>
               
               {/* Interactive Tools dropdown panel */}
               <div 
@@ -304,6 +313,12 @@ export default function Navbar({
                 className="text-left font-medium p-3 bg-[#1a1c20] rounded-xl hover:bg-[#282a2e] text-[#e2e2e8]"
               >
                 Compare
+              </button>
+              <button
+                onClick={() => handleNavClick('consultation')}
+                className="text-left font-medium p-3 bg-[#1a1c20] rounded-xl hover:bg-[#282a2e] text-[#e2e2e8] col-span-2"
+              >
+                Consultation
               </button>
               
               {/* Mobile Calculators */}

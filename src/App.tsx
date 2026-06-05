@@ -7,6 +7,9 @@ import DetailView from './components/DetailView';
 import CompareView from './components/CompareView';
 import EMIView from './components/EMIView';
 import SavingsView from './components/SavingsView';
+import ConsultationView from './components/ConsultationView';
+import PrivacyView from './components/PrivacyView';
+import TermsView from './components/TermsView';
 import { PageType, EVModel } from './types';
 import { evModels, updateEvModels } from './data/evData';
 import { getAllEVs } from './lib/evService';
@@ -174,6 +177,25 @@ export default function App() {
             setCurrentPage={setCurrentPage}
             onSelectEV={handleSelectEV}
             selectedCity={selectedCity}
+          />
+        );
+      case 'consultation':
+        return (
+          <ConsultationView
+            setCurrentPage={setCurrentPage}
+            selectedCity={selectedCity}
+          />
+        );
+      case 'privacy':
+        return (
+          <PrivacyView
+            setCurrentPage={setCurrentPage}
+          />
+        );
+      case 'terms':
+        return (
+          <TermsView
+            setCurrentPage={setCurrentPage}
           />
         );
       default:
