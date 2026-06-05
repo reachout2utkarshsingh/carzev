@@ -13,6 +13,7 @@ import TermsView from './components/TermsView';
 import { PageType, EVModel } from './types';
 import { evModels, updateEvModels } from './data/evData';
 import { getAllEVs } from './lib/evService';
+import { motion, AnimatePresence } from 'motion/react';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
@@ -216,8 +217,18 @@ export default function App() {
       />
 
       {/* Scalable view node content */}
-      <main className="flex-grow">
-        {renderViewContent()}
+      <main className="flex-grow overflow-hidden relative">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentPage}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+          >
+            {renderViewContent()}
+          </motion.div>
+        </AnimatePresence>
       </main>
 
       {/* Footer segment */}
