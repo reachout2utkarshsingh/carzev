@@ -186,6 +186,8 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
           </div>
         </div>
       )}
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black/55 pointer-events-none z-10"></div>
       {/* Subtle vignette for premium look */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/20 to-black/90 pointer-events-none mix-blend-multiply z-10"></div>
     </div>
