@@ -10,6 +10,8 @@ interface NavbarProps {
   onSelectEV: (evId: string) => void;
   selectedCity: string;
   setSelectedCity: (city: string) => void;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
 }
 
 const CITIES = ["New Delhi", "Mumbai", "Bengaluru", "Pune", "Hyderabad", "Chennai"];
@@ -21,12 +23,20 @@ export default function Navbar({
   onSelectEV,
   selectedCity,
   setSelectedCity,
+  searchQuery,
+  setSearchQuery,
 }: NavbarProps) {
-  const [searchQuery, setSearchQuery] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showCityModal, setShowCityModal] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setShowSuggestions(false);
+    setSelectedCategory('all');
+    setCurrentPage('listings');
+  };
 
   // Filter recommendations based on search
   const suggestions = searchQuery.trim()
@@ -178,7 +188,7 @@ export default function Navbar({
 
             {/* Quick Autocomplete Search */}
             <div className="relative hidden md:block w-56 lg:w-72">
-              <div className="relative">
+              <form onSubmit={handleSearchSubmit} className="relative">
                 <input
                   type="text"
                   placeholder="Search any EV, Brand or SUV..."
@@ -194,13 +204,14 @@ export default function Navbar({
                 <Search className="w-4 h-4 text-[#8b919b] absolute left-3 top-1/2 -translate-y-1/2" />
                 {searchQuery && (
                   <button 
+                    type="button"
                     onClick={() => setSearchQuery('')}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8b919b] hover:text-white"
                   >
                     <X className="w-3 h-3" />
                   </button>
                 )}
-              </div>
+              </form>
               
               {/* Autocomplete dropdown list */}
               {showSuggestions && suggestions.length > 0 && (
@@ -263,14 +274,16 @@ export default function Navbar({
           <div className="md:hidden bg-[#111317] border-b border-[#414750]/50 absolute top-[64px] left-0 w-full z-40 transition-all p-4 space-y-4">
             {/* Search Input */}
             <div className="relative">
-              <input
-                type="text"
-                placeholder="Search EVs..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-[#1a1c20] text-sm text-[#e2e2e8] placeholder-[#8b919b] border border-[#414750]/55 rounded-full"
-              />
-              <Search className="w-4 h-4 text-[#8b919b] absolute left-3 top-1/2 -translate-y-1/2" />
+              <form onSubmit={handleSearchSubmit} className="relative">
+                <input
+                  type="text"
+                  placeholder="Search EVs..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2 bg-[#1a1c20] text-sm text-[#e2e2e8] placeholder-[#8b919b] border border-[#414750]/55 rounded-full"
+                />
+                <Search className="w-4 h-4 text-[#8b919b] absolute left-3 top-1/2 -translate-y-1/2" />
+              </form>
               {searchQuery && suggestions.length > 0 && (
                 <div className="absolute left-0 right-0 mt-1 max-h-48 overflow-y-auto bg-[#1e2024] border border-[#414750] rounded-xl z-50">
                   {suggestions.map((ev) => (

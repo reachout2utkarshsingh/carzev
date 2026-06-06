@@ -14,6 +14,10 @@ interface CategoryViewProps {
   setFilterNewLaunches: (newLaunches: boolean) => void;
   onAddToCompare: (ev: EVModel) => void;
   compareList: EVModel[];
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  selectedBrands: string[];
+  setSelectedBrands: (brands: string[]) => void;
 }
 
 export default function CategoryView({
@@ -26,10 +30,13 @@ export default function CategoryView({
   filterNewLaunches,
   setFilterNewLaunches,
   onAddToCompare,
-  compareList
+  compareList,
+  searchQuery,
+  setSearchQuery,
+  selectedBrands,
+  setSelectedBrands
 }: CategoryViewProps) {
-  // Local states for additional sidebar filters
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  // Local states for remaining sidebar filters
   const [minRange, setMinRange] = useState<number>(0);
   const [seatingChoice, setSeatingChoice] = useState<number | 'all'>('all');
   const [sortBy, setSortBy] = useState<string>('rank'); // 'rank', 'price-asc', 'price-desc', 'range-desc'
@@ -37,13 +44,26 @@ export default function CategoryView({
   // Extract all existing unique brands for checkbox iteration
   const allBrands = useMemo(() => {
     const brands = evModels.map(ev => ev.brand);
-    return Array.from(new Set(brands));
+    return Array.from(new Set(brands)).sort();
   }, []);
 
-  // Filter items matching sidebar settings
+  // Filter items matching sidebar settings and search query
   const filteredEVs = useMemo(() => {
     return evModels.filter((ev) => {
-      // 1. Category check
+      // 1. Search Query check
+      if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase();
+        const matchesName = ev.name.toLowerCase().includes(query);
+        const matchesBrand = ev.brand.toLowerCase().includes(query);
+        const matchesCategory = ev.category.toLowerCase().includes(query);
+        const matchesDesc = ev.description.toLowerCase().includes(query);
+        
+        if (!matchesName && !matchesBrand && !matchesCategory && !matchesDesc) {
+          return false;
+        }
+      }
+      
+      // 2. Category check
       if (selectedCategory !== 'all') {
         if (selectedCategory === 'two-wheelers') {
           if (ev.category !== 'scooters' && ev.category !== 'bikes') {
@@ -53,23 +73,23 @@ export default function CategoryView({
           return false;
         }
       }
-      // 2. Budget upper limit check
+      // 3. Budget upper limit check
       if (ev.priceMin > filterBudget) {
         return false;
       }
-      // 3. New launch check
+      // 4. New launch check
       if (filterNewLaunches && !ev.newLaunch) {
         return false;
       }
-      // 4. Multiple selected brands check
+      // 5. Multiple selected brands check
       if (selectedBrands.length > 0 && !selectedBrands.includes(ev.brand)) {
         return false;
       }
-      // 5. Min range check
+      // 6. Min range check
       if (ev.range < minRange) {
         return false;
       }
-      // 6. Seating capacity check
+      // 7. Seating capacity check
       if (seatingChoice !== 'all' && ev.seatingCapacity !== seatingChoice) {
         return false;
       }
@@ -87,7 +107,7 @@ export default function CategoryView({
       // Default: popularity rank / rating desc
       return b.rating - a.rating;
     });
-  }, [selectedCategory, filterBudget, filterNewLaunches, selectedBrands, minRange, seatingChoice, sortBy]);
+  }, [selectedCategory, filterBudget, filterNewLaunches, selectedBrands, minRange, seatingChoice, sortBy, searchQuery]);
 
   const handleBrandToggle = (brand: string) => {
     if (selectedBrands.includes(brand)) {
@@ -105,6 +125,7 @@ export default function CategoryView({
     setMinRange(0);
     setSeatingChoice('all');
     setSortBy('rank');
+    setSearchQuery('');
   };
 
   return (
@@ -209,22 +230,28 @@ export default function CategoryView({
             {/* A3. Brand list checkboxes */}
             <div>
               <p className="text-xs font-bold text-[#8b919b] uppercase tracking-wider mb-3">Filter by Brand</p>
-              <div className="space-y-2 max-h-40 overflow-y-auto pr-2" id="brand-checkboxes-list">
+              <div className="space-y-2 max-h-48 overflow-y-auto pr-2" id="brand-checkboxes-list">
                 {allBrands.map((brand) => {
                   const isChecked = selectedBrands.includes(brand);
                   return (
-                    <label 
+                    <button
                       key={brand}
-                      className="flex items-center gap-2.5 text-xs text-[#c0c7d1] hover:text-white cursor-pointer select-none"
+                      onClick={() => handleBrandToggle(brand)}
+                      className={`w-full flex items-center justify-between px-3 py-2.5 text-xs font-bold rounded-xl border transition-all duration-200 cursor-pointer select-none text-left ${
+                        isChecked
+                          ? 'bg-[#1b6ca8]/20 border-[#9acbff] text-white shadow-[0_0_15px_rgba(154,203,255,0.05)]'
+                          : 'bg-[#111317] border-[#414750]/20 text-[#c0c7d1] hover:border-[#8b919b] hover:text-white'
+                      }`}
                     >
-                      <input
-                        type="checkbox"
-                        checked={isChecked}
-                        onChange={() => handleBrandToggle(brand)}
-                        className="w-4 h-4 rounded-md border-[#414750] bg-[#111317] text-[#1b6ca8] focus:ring-1 focus:ring-[#9acbff]"
-                      />
                       <span>{brand}</span>
-                    </label>
+                      <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all duration-200 ${
+                        isChecked
+                          ? 'bg-[#9acbff] border-[#9acbff]'
+                          : 'border-[#414750]/65 bg-transparent'
+                      }`}>
+                        {isChecked && <Check className="w-3 h-3 text-[#111317] stroke-[3.5]" />}
+                      </div>
+                    </button>
                   );
                 })}
               </div>
@@ -289,12 +316,26 @@ export default function CategoryView({
           <div className="lg:col-span-3 space-y-6">
             
             {/* Status overview text lines */}
-            <div className="flex justify-between items-center text-xs text-[#8b919b] font-mono">
-              <p>Found <span className="text-white font-bold">{filteredEVs.length}</span> Electric Vehicles match criteria</p>
-              {(selectedBrands.length > 0 || minRange > 0 || seatingChoice !== 'all' || filterBudget < 50 || selectedCategory !== 'all') && (
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#8b919b] font-mono bg-[#1a1c20] p-4 rounded-2xl border border-[#414750]/30">
+              <div className="flex flex-wrap items-center gap-2">
+                <span>Found <span className="text-white font-bold">{filteredEVs.length}</span> Electric Vehicles match criteria</span>
+                {searchQuery && (
+                  <span className="flex items-center gap-1 bg-[#1b6ca8]/20 border border-[#9acbff]/35 text-[#9acbff] px-2 py-0.5 rounded-lg text-[10px] font-bold">
+                    Search: "{searchQuery}"
+                    <button 
+                      onClick={() => setSearchQuery('')}
+                      className="hover:text-white font-black cursor-pointer text-[12px] px-1"
+                      title="Clear search query"
+                    >
+                      ×
+                    </button>
+                  </span>
+                )}
+              </div>
+              {(selectedBrands.length > 0 || minRange > 0 || seatingChoice !== 'all' || filterBudget < 50 || selectedCategory !== 'all' || searchQuery !== '') && (
                 <button 
                   onClick={handleClearFilters}
-                  className="text-[#9acbff] hover:underline cursor-pointer"
+                  className="text-[#9acbff] hover:underline cursor-pointer text-right self-end sm:self-auto font-bold"
                 >
                   Reset Active Filters
                 </button>

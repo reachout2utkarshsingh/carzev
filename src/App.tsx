@@ -23,6 +23,8 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<'cars' | 'scooters' | 'bikes' | 'commercial' | 'all' | 'two-wheelers'>('all');
   const [filterBudget, setFilterBudget] = useState<number>(50);
   const [filterNewLaunches, setFilterNewLaunches] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   
   // Pre-populate Comparison Basket with default models from screenshots
   const [compareList, setCompareList] = useState<EVModel[]>([]);
@@ -125,6 +127,9 @@ export default function App() {
             setFilterNewLaunches={setFilterNewLaunches}
             onAddToCompare={handleAddToCompare}
             compareList={compareList}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            setSelectedBrands={setSelectedBrands}
           />
         );
       case 'listings':
@@ -140,6 +145,10 @@ export default function App() {
             setFilterNewLaunches={setFilterNewLaunches}
             onAddToCompare={handleAddToCompare}
             compareList={compareList}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            selectedBrands={selectedBrands}
+            setSelectedBrands={setSelectedBrands}
           />
         );
       case 'detail':
@@ -214,6 +223,8 @@ export default function App() {
         onSelectEV={handleSelectEV}
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
       />
 
       {/* Scalable view node content */}

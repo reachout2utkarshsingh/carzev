@@ -7,12 +7,15 @@ import { motion, useScroll, useSpring } from 'motion/react';
 
 interface HomeViewProps {
   setCurrentPage: (page: PageType) => void;
-  setSelectedCategory: (category: 'cars' | 'scooters' | 'bikes' | 'commercial' | 'all') => void;
+  setSelectedCategory: (category: 'cars' | 'scooters' | 'bikes' | 'commercial' | 'all' | 'two-wheelers') => void;
   onSelectEV: (evId: string) => void;
   setFilterBudget: (budget: number) => void;
   setFilterNewLaunches: (newLaunches: boolean) => void;
   onAddToCompare: (ev: EVModel) => void;
   compareList: EVModel[];
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  setSelectedBrands: (brands: string[]) => void;
 }
 
 const containerVariants = {
@@ -37,10 +40,19 @@ export default function HomeView({
   setFilterBudget,
   setFilterNewLaunches,
   onAddToCompare,
-  compareList
+  compareList,
+  searchQuery,
+  setSearchQuery,
+  setSelectedBrands
 }: HomeViewProps) {
-  const [localSearch, setLocalSearch] = useState('');
+  const [localSearch, setLocalSearch] = useState(searchQuery);
   
+  // Dynamic list of unique brands
+  const allBrands = React.useMemo(() => {
+    const brands = evModels.map(ev => ev.brand);
+    return Array.from(new Set(brands)).sort();
+  }, []);
+
   const containerRef = useRef<HTMLDivElement>(null);
   
   const { scrollYProgress } = useScroll({
@@ -62,6 +74,11 @@ export default function HomeView({
     });
   }, [smoothProgress]);
 
+  // Sync local search state with global state if changed
+  useEffect(() => {
+    setLocalSearch(searchQuery);
+  }, [searchQuery]);
+
   // Extract popular items
   const popularEVs = evModels.filter(m => m.popular).slice(0, 4);
 
@@ -69,6 +86,8 @@ export default function HomeView({
     // Reset filters
     setFilterBudget(100);
     setFilterNewLaunches(false);
+    setSelectedBrands([]);
+    setSearchQuery('');
 
     if (type === 'cars' || type === 'scooters' || type === 'bikes') {
       setSelectedCategory(type);
@@ -85,12 +104,22 @@ export default function HomeView({
     setCurrentPage('listings');
   };
 
+  const handleBrandClick = (brand: string) => {
+    setSelectedCategory('all');
+    setSelectedBrands([brand]);
+    setSearchQuery('');
+    setFilterBudget(100);
+    setFilterNewLaunches(false);
+    setCurrentPage('listings');
+  };
+
   const handleLocalSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!localSearch.trim()) return;
     
     // Redirect to listings and match string
     setSelectedCategory('all');
+    setSelectedBrands([]); // Clear brands filter on free search
+    setSearchQuery(localSearch.trim());
     setCurrentPage('listings');
   };
 
@@ -308,31 +337,16 @@ export default function HomeView({
             className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
           >
             <h3 className="text-xs uppercase font-bold tracking-widest text-[#00C896] mb-10 font-mono drop-shadow-md">Explore Top Ecosystem Brands</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 max-w-3xl mx-auto gap-8 items-center justify-center">
-              <span 
-                onClick={() => handlePillClick('cars')} 
-                className="text-xl md:text-3xl font-black text-white/50 hover:text-white cursor-pointer transition-all uppercase tracking-tight px-4 hover:scale-110 drop-shadow-xl"
-              >
-                TATA
-              </span>
-              <span 
-                onClick={() => handlePillClick('cars')}
-                className="text-xl md:text-3xl font-black text-white/50 hover:text-white cursor-pointer transition-all uppercase tracking-tight px-4 hover:scale-110 drop-shadow-xl"
-              >
-                HYUNDAI
-              </span>
-              <span 
-                onClick={() => handlePillClick('cars')}
-                className="text-xl md:text-3xl font-black text-white/50 hover:text-white cursor-pointer transition-all uppercase tracking-tight px-4 hover:scale-110 drop-shadow-xl"
-              >
-                MG MOTOR
-              </span>
-              <span 
-                onClick={() => handlePillClick('cars')}
-                className="text-xl md:text-3xl font-black text-white/50 hover:text-white cursor-pointer transition-all uppercase tracking-tight px-4 hover:scale-110 drop-shadow-xl"
-              >
-                BYD
-              </span>
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 max-w-5xl mx-auto items-center px-4">
+              {allBrands.map((brand) => (
+                <span 
+                  key={brand}
+                  onClick={() => handleBrandClick(brand)}
+                  className="text-base sm:text-xl md:text-2xl font-black text-white/50 hover:text-[#00C896] hover:scale-110 cursor-pointer transition-all uppercase tracking-tight px-4 sm:px-5 py-2 sm:py-2.5 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/5 hover:border-[#00C896]/20 drop-shadow-xl"
+                >
+                  {brand}
+                </span>
+              ))}
             </div>
           </motion.div>
         </section>
