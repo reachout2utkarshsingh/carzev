@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ArrowRight } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomeView from './components/HomeView';
@@ -18,6 +19,11 @@ import { motion, AnimatePresence } from 'motion/react';
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
   const [selectedEVId, setSelectedEVId] = useState<string>('nexon-ev');
+
+  // Scroll to top on page navigation
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [currentPage]);
   
   // Responsive interactive filters
   const [selectedCategory, setSelectedCategory] = useState<'cars' | 'scooters' | 'bikes' | 'commercial' | 'all' | 'two-wheelers'>('all');
@@ -52,15 +58,7 @@ export default function App() {
       })
       .finally(() => {
         // Pre-populate comparison list from whichever data is current
-        const defaultNexon = evModels.find(e => e.id === 'nexon-ev');
-        const defaultMG = evModels.find(e => e.id === 'mg-zs-ev');
-        const defaultCreta = evModels.find(e => e.id === 'creta-electric');
-        
-        const defaults: EVModel[] = [];
-        if (defaultNexon) defaults.push(defaultNexon);
-        if (defaultMG) defaults.push(defaultMG);
-        if (defaultCreta) defaults.push(defaultCreta);
-        setCompareList(defaults);
+        setCompareList([]);
         
         setLoading(false);
       });
@@ -241,6 +239,24 @@ export default function App() {
           </motion.div>
         </AnimatePresence>
       </main>
+
+      {/* Floating Compare Shortcut */}
+      {compareList.length > 0 && currentPage !== 'compare' && (
+        <div className="fixed bottom-8 left-0 w-full flex justify-center z-50 pointer-events-none">
+          <div className="animate-bounce pointer-events-auto">
+            <button 
+              onClick={() => {
+                setCurrentPage('compare');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="bg-[#00C896] text-[#002116] px-6 py-3 rounded-full font-bold shadow-2xl flex items-center gap-2 border border-[#00e3aa] hover:scale-105 transition-transform whitespace-nowrap"
+            >
+              Compare {compareList.length} Vehicle{compareList.length > 1 ? 's' : ''}
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Footer segment */}
       <Footer 

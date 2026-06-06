@@ -121,9 +121,6 @@ export default function CompareView({
               <ArrowLeftRight className="w-6 h-6 text-[#9acbff]" />
               Compare Electric SUVs
             </h1>
-            <p className="text-xs text-[#8b919b] mt-1.5 font-mono">
-              Home &gt; Compare Tool
-            </p>
           </div>
 
           <div className="relative">
@@ -238,12 +235,22 @@ export default function CompareView({
             {/* Side-by-Side specifications compare table matching requirements */}
             <div className="bg-[#1a1c20] border border-[#414750]/30 rounded-2xl overflow-hidden shadow-xl" id="compare-specs-table">
               <div className="p-5 border-b border-[#414750]/20 bg-[#212328]/60">
-                <span className="text-xs font-bold text-[#9acbff] uppercase tracking-wider font-mono">Telemetry Data</span>
-                <h3 className="text-base font-extrabold text-white mt-0.5">Parameters Audit Table</h3>
+                <span className="text-xs font-bold text-[#9acbff] uppercase tracking-wider font-mono">Specifications</span>
+                <h3 className="text-base font-extrabold text-white mt-0.5">Specs Overview</h3>
               </div>
               
               <div className="overflow-x-auto min-w-full">
-                <table className="w-full text-xs text-left text-[#c0c7d1]">
+                <table className="w-full text-xs text-left text-[#c0c7d1] table-fixed">
+                  <thead>
+                    <tr className="border-b border-[#414750]/40">
+                      <th className="p-4 font-bold text-[#8b919b] uppercase tracking-wider w-1/4 font-mono">Features</th>
+                      {compareList.map((ev) => (
+                        <th key={ev.id} className="p-4 font-bold text-white text-sm">
+                          <span className="px-2.5">{ev.name}</span>
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
                   <tbody>
                     
                     {/* EX-SHOWROOM MIN PRICE */}
@@ -336,7 +343,7 @@ export default function CompareView({
                       <td className="p-4 font-bold text-[#8b919b] uppercase tracking-wider w-1/4 font-mono">Engine Torque</td>
                       {compareList.map((ev) => (
                         <td key={ev.id} className="p-4 font-semibold text-white">
-                          {ev.torque || 'N/A'}
+                          <span className="px-2.5">{ev.torque || 'N/A'}</span>
                         </td>
                       ))}
                     </tr>
@@ -346,7 +353,7 @@ export default function CompareView({
                       <td className="p-4 font-bold text-[#8b919b] uppercase tracking-wider w-1/4 font-mono">DC Fast Charge</td>
                       {compareList.map((ev) => (
                         <td key={ev.id} className="p-4 font-semibold text-white">
-                          {ev.chargingDC || ev.chargingTime}
+                          <span className="px-2.5">{ev.chargingDC || ev.chargingTime}</span>
                         </td>
                       ))}
                     </tr>
@@ -356,7 +363,7 @@ export default function CompareView({
                       <td className="p-4 font-bold text-[#8b919b] uppercase tracking-wider w-1/4 font-mono">Seating Capacity</td>
                       {compareList.map((ev) => (
                         <td key={ev.id} className="p-4 font-semibold text-white">
-                          {ev.seatingCapacity} Seaters
+                          <span className="px-2.5">{ev.seatingCapacity} Seaters</span>
                         </td>
                       ))}
                     </tr>
@@ -373,8 +380,8 @@ export default function CompareView({
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[#00C896] text-[10px] uppercase tracking-widest font-bold font-mono">CARZev Engine</span>
-                  <h3 className="text-lg font-bold text-white">Deep-Dive AI Analytics Verdict</h3>
+                  <span className="text-[#00C896] text-[10px] uppercase tracking-widest font-bold font-mono">Smart Insight</span>
+                  <h3 className="text-lg font-bold text-white">Comparison Verdict</h3>
                 </div>
               </div>
 

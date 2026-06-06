@@ -24,7 +24,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: true,
     newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDm-1WAymmr2CNrBLGHpPponT4SDblleXe4Da4C6hpoU35Km9ZAvcrZkeGmnQGWjXtMHGVXikrGKSF5BPJkM7ONu9-jqGoE36Sc4b_fP1RwEL-LYi9UbqH_l7yFLRCQpjq-pbxb1Cck8SOrpJFUYFBaxnNpzmgyE3FHGhJZeHEeJOLsWfbu7R0wj0yvWpcC8f9YWdKqdNttEawx2M94LhVR2khAr_1d8AmJaqTQd2EnoL3W3Y5qT1zcYE3SAoSGdFvNZpQFdFvS8l4O',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/2022_Tata_Tiago_EV_IB_XZ%2B_Tech_LR_front_view.png/1280px-2022_Tata_Tiago_EV_IB_XZ%2B_Tech_LR_front_view.png',
     thumbnails: [],
     pros: [
       'Most affordable entry-level electric hatchback in India',
@@ -62,7 +62,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: false,
     newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDm-1WAymmr2CNrBLGHpPponT4SDblleXe4Da4C6hpoU35Km9ZAvcrZkeGmnQGWjXtMHGVXikrGKSF5BPJkM7ONu9-jqGoE36Sc4b_fP1RwEL-LYi9UbqH_l7yFLRCQpjq-pbxb1Cck8SOrpJFUYFBaxnNpzmgyE3FHGhJZeHEeJOLsWfbu7R0wj0yvWpcC8f9YWdKqdNttEawx2M94LhVR2khAr_1d8AmJaqTQd2EnoL3W3Y5qT1zcYE3SAoSGdFvNZpQFdFvS8l4O',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/TATA_Tigor_at_Shillong_Peak_View_%28cropped%29.jpg/1280px-TATA_Tigor_at_Shillong_Peak_View_%28cropped%29.jpg',
     thumbnails: [],
     pros: [
       'Spacious 316-litre sedan boot space for weekend bags',
@@ -99,7 +99,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: true,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDm-1WAymmr2CNrBLGHpPponT4SDblleXe4Da4C6hpoU35Km9ZAvcrZkeGmnQGWjXtMHGVXikrGKSF5BPJkM7ONu9-jqGoE36Sc4b_fP1RwEL-LYi9UbqH_l7yFLRCQpjq-pbxb1Cck8SOrpJFUYFBaxnNpzmgyE3FHGhJZeHEeJOLsWfbu7R0wj0yvWpcC8f9YWdKqdNttEawx2M94LhVR2khAr_1d8AmJaqTQd2EnoL3W3Y5qT1zcYE3SAoSGdFvNZpQFdFvS8l4O',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/2021_Tata_Punch_Creative_%28India%29_front_view_01.png/1280px-2021_Tata_Punch_Creative_%28India%29_front_view_01.png',
     thumbnails: [],
     pros: [
       'Built on Tatas new pure-EV Acti.ev platform architecture',
@@ -116,7 +116,7 @@ export const evModels: EVModel[] = [
   },
   {
     id: 'nexon-ev',
-    name: 'Nexon EV Max',
+    name: 'Nexon EV',
     brand: 'Tata Motors',
     category: 'cars',
     priceMin: 12.49,
@@ -137,7 +137,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDm-1WAymmr2CNrBLGHpPponT4SDblleXe4Da4C6hpoU35Km9ZAvcrZkeGmnQGWjXtMHGVXikrGKSF5BPJkM7ONu9-jqGoE36Sc4b_fP1RwEL-LYi9UbqH_l7yFLRCQpjq-pbxb1Cck8SOrpJFUYFBaxnNpzmgyE3FHGhJZeHEeJOLsWfbu7R0wj0yvWpcC8f9YWdKqdNttEawx2M94LhVR2khAr_1d8AmJaqTQd2EnoL3W3Y5qT1zcYE3SAoSGdFvNZpQFdFvS8l4O',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Tata_Nexon_Blue_Dual_Tone.jpg/1280px-Tata_Nexon_Blue_Dual_Tone.jpg',
     thumbnails: [
       'https://lh3.googleusercontent.com/aida-public/AB6AXuB5byx1iKKZE_1vnaVZwTXKjWq5oM2YKfkWrDJMFDrvF1c7O-zZzCf02-I7-wKLonLIErSLCsvL7O81GP65vtWQZGysqvlYPGgp1LIDuJJ9P3l76__L7VdgwRR4ym-Cw7CQicNs1QXgbdEjd_Njo4IjKAu3SxrxbV_I-E6N-0DmrNAM0Yli-rE-shOH75jKpM3ilHJfh_BpmLc5957uBclzBnFS8WAh4rN9mYl2n0yFtoqn_ChG-2EwN1F3Qycz-m7ie2uFoGeQrBH5',
       'https://lh3.googleusercontent.com/aida-public/AB6AXuALTiU9mo2360QbfT0WdJgi3efQ6WcHHS90XS3aypNtMxRuYHu-dckofD-5WeWPdGegeM6B4KeeV8qNXk0I4CwDeOkElQZIB7DRi9ui1UVEMUAXeKmZLqfi8NJniir0ikla_ikJ8oomu7Kff1onqSdgCXEbtHh2524xNp1MbM1b7dBjtGDcO27rBuOGBx1BVoreaarpJnYcYYZ1WfBkj2XWlSr7x9MZt5oGrkGVxmLKmD3oQpQRHWbwa-GxImjQrPUnBCvlSTkmnmGp',
@@ -157,44 +157,7 @@ export const evModels: EVModel[] = [
     ],
     description: 'The Tata Nexon EV stands as Indias undisputed favorite compact electric SUV. Championing structural safety, spacious modern interiors, and a commanding high ground clearance of 205mm, it has pioneered accessible electric highway motoring across India. Dynamic multi-regen levels and high-tech instrumentation make every trip an absolute joy.'
   },
-  {
-    id: 'nexon-ev-lr',
-    name: 'Nexon.ev LR',
-    brand: 'Tata Motors',
-    category: 'cars',
-    priceMin: 16.99,
-    priceMax: 19.99,
-    range: 465,
-    rangeType: 'MIDC',
-    battery: '40.5 kWh',
-    power: '142.68 bhp',
-    torque: '250 Nm',
-    topSpeed: '150 kmph',
-    acceleration: '8.9 seconds',
-    chargingTime: '56 mins (10-80%)',
-    chargingAC: '7.2 kW (Type 2)',
-    chargingDC: '50 kW (CCS2)',
-    rating: 4.8,
-    reviewsCount: 194,
-    seatingCapacity: 5,
-    featured: false,
-    popular: true,
-    newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDlGp-geaBYDgR75szeVUXG8XEtIJd9RhtQ-nVElNSWXTRtKBAV1N3iP59Nv6EQ7mIBhW820TKdKBfayZZmqoIBhgXqnnL7Td51Fp1rLyeHqeV4O3h87kVD52hqK-ST2yZp1g4s9zXklTbT4hPiI8Xf4-06CSKLf5UANCw00CcTFjB0VFIuL2_WNxb-MG9fbSSsinjf55xN2HGNyA9UuAwunBnkoXbuIfHMIrwj_Prri4g2YtRFuy52jO1HzOV543XZqr7tGDGaB_BD',
-    thumbnails: [],
-    pros: [
-      'Refined Long Range powertrain',
-      'High tech 12.3-inch touch display console',
-      'Outstanding vehicle-to-load bidirectional charging',
-      'Plush leatherette ventilated seating'
-    ],
-    cons: [
-      'Subtle paint scheme selections are premium but limited',
-      'No physical dashboard controls for air-conditioning',
-      'Charging socket requires high-amp grounding check at home'
-    ],
-    description: 'The long range edition of Nexons newly stylized subbrand Nexon.ev LR bundles premium convenience additions, including smart digital welcome lights, larger infotainment displays, and paddle-shifters to control three progressive regenerative braking coefficients.'
-  },
+
   {
     id: 'curvv-ev',
     name: 'Curvv EV',
@@ -271,8 +234,8 @@ export const evModels: EVModel[] = [
     description: 'The upcoming Tata Harrier EV brings the legendary solid build quality and road presence of the Harrier to the electric era. Equipped with dual-motor AWD options and a massive range, it is built for long-distance cruising.'
   },
   {
-    id: 'xuv400-ev',
-    name: 'XUV400 EV',
+    id: 'xuv3xo-ev',
+    name: 'XUV 3XO EV',
     brand: 'Mahindra',
     category: 'cars',
     priceMin: 15.49,
@@ -305,7 +268,7 @@ export const evModels: EVModel[] = [
       'AC efficiency drops marginally under peak summer afternoons',
       'No rear AC vents or front ventilated seats'
     ],
-    description: 'The Mahindra XUV400 EV is a spacious and punchy mid-size electric SUV. Generating an impressive 310 Nm of torque, it boasts the quickest acceleration in its class and provides a highly comfortable cabin space for families.'
+    description: 'The Mahindra XUV 3XO EV is a spacious and punchy mid-size electric SUV. Generating an impressive 310 Nm of torque, it boasts the quickest acceleration in its class and provides a highly comfortable cabin space for families.'
   },
   {
     id: 'be-6e',
