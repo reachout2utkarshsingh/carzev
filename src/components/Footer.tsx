@@ -18,7 +18,7 @@ export default function Footer({ setCurrentPage, setSelectedCategory }: FooterPr
   };
 
   return (
-    <footer className="bg-[#111317] border-t border-[#414750]/30 text-[#c0c7d1]" id="footer">
+    <footer className="relative z-10 bg-[#111317] border-t border-[#414750]/30 text-[#c0c7d1]" id="footer">
       
       {/* Editorial Blog / Info Snippets Section - Fully Realized Editorial */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
@@ -47,12 +47,16 @@ export default function Footer({ setCurrentPage, setSelectedCategory }: FooterPr
           
           {/* Logo & Description */}
           <div className="md:col-span-2">
-            <span 
+            <div 
               onClick={() => handleNavClick('home')}
-              className="text-2xl font-bold tracking-tight text-[#9acbff] cursor-pointer font-headline-md font-sans"
+              className="flex items-center cursor-pointer w-fit py-1"
             >
-              CAR<span className="text-[#00C896]">Z</span>ev
-            </span>
+              <img 
+                src="/images/logo.webp" 
+                alt="CARZev Logo" 
+                className="h-8 w-auto object-contain"
+              />
+            </div>
             <p className="text-sm text-[#8b919b] mt-4 leading-relaxed max-w-sm">
               Indias premier platform for discovering, comparing, and transitioning to sustainable electric mobility. Engineered for high-stakes, data-driven decisions.
             </p>

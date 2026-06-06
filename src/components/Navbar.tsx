@@ -71,13 +71,17 @@ export default function Navbar({
           
           {/* Logo & Main nav */}
           <div className="flex items-center gap-8">
-            <span 
+            <div 
               onClick={() => handleNavClick('home')}
-              className="text-2xl font-bold tracking-tight text-[#9acbff] cursor-pointer hover:opacity-85 transition-opacity font-headline-md font-sans"
+              className="flex items-center cursor-pointer hover:opacity-85 transition-opacity py-1"
               id="nav-logo"
             >
-              CAR<span className="text-[#00C896]">Z</span>ev
-            </span>
+              <img 
+                src="/images/logo.webp" 
+                alt="CARZev Logo" 
+                className="h-7 w-auto object-contain"
+              />
+            </div>
             
             <div className="hidden md:flex gap-6 items-center">
               <span
