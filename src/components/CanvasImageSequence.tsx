@@ -7,18 +7,17 @@ interface CanvasImageSequenceProps {
 const TOTAL_FRAMES = 240;
 
 const currentFrame = (index: number) =>
-  `/images/ezgif-frame-${index.toString().padStart(3, '0')}.jpg`;
+  `/images/ezgif-frame-${index.toString().padStart(3, '0')}.webp`;
 
 export default function CanvasImageSequence({ progress }: CanvasImageSequenceProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imagesRef = useRef<(HTMLImageElement | null)[]>(new Array(TOTAL_FRAMES).fill(null));
   const [firstLoaded, setFirstLoaded] = useState(false);
+  
   const progressRef = useRef(progress);
-
-  // Keep progressRef updated for onload callbacks
-  useEffect(() => {
-    progressRef.current = progress;
-  }, [progress]);
+  const targetIndexRef = useRef(0);
+  const loadingSetRef = useRef<Set<number>>(new Set());
+  const pendingQueueRef = useRef<number[]>([]);
 
   const renderFrame = (p: number) => {
     if (!canvasRef.current) return;
@@ -28,12 +27,19 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
     // ensure progress is 0-1, map to 0-239
     const targetIndex = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.floor(p * TOTAL_FRAMES)));
     
-    // Find closest loaded image
+    // Find closest loaded image (search outwards from targetIndex)
     let imgToDraw = imagesRef.current[targetIndex];
     if (!imgToDraw || !imgToDraw.complete) {
-      for (let i = targetIndex; i >= 0; i--) {
-        if (imagesRef.current[i] && imagesRef.current[i]!.complete) {
-          imgToDraw = imagesRef.current[i];
+      for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
+        const prev = targetIndex - offset;
+        const next = targetIndex + offset;
+        
+        if (prev >= 0 && imagesRef.current[prev] && imagesRef.current[prev]!.complete) {
+          imgToDraw = imagesRef.current[prev];
+          break;
+        }
+        if (next < TOTAL_FRAMES && imagesRef.current[next] && imagesRef.current[next]!.complete) {
+          imgToDraw = imagesRef.current[next];
           break;
         }
       }
@@ -55,25 +61,104 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
     }
   };
 
-  // Preload images
-  useEffect(() => {
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
-      const img = new Image();
-      img.src = currentFrame(i);
-      img.onload = () => {
-        imagesRef.current[i - 1] = img;
-        if (i === 1) {
-          setFirstLoaded(true);
-        }
-        // If this image is the one currently needed, render it
-        const targetIndex = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.floor(progressRef.current * TOTAL_FRAMES)));
-        if (i - 1 === targetIndex) {
-          requestAnimationFrame(() => renderFrame(progressRef.current));
-        }
-      };
+  const loadFrame = (idx: number) => {
+    if (imagesRef.current[idx] || loadingSetRef.current.has(idx)) return;
+    
+    loadingSetRef.current.add(idx);
+    const img = new Image();
+    img.src = currentFrame(idx + 1);
+    
+    img.onload = () => {
+      imagesRef.current[idx] = img;
+      loadingSetRef.current.delete(idx);
+      
+      // If this image is the one currently needed, render it
+      const currentTarget = targetIndexRef.current;
+      if (idx === currentTarget) {
+        requestAnimationFrame(() => renderFrame(progressRef.current));
+      }
+      
+      startNextDownloads();
+    };
+    
+    img.onerror = () => {
+      loadingSetRef.current.delete(idx);
+      startNextDownloads();
+    };
+  };
+
+  const startNextDownloads = () => {
+    const targetIndex = targetIndexRef.current;
+    
+    // Clean queue of already loaded/loading
+    pendingQueueRef.current = pendingQueueRef.current.filter(
+      (idx) => !imagesRef.current[idx] && !loadingSetRef.current.has(idx)
+    );
+    
+    if (pendingQueueRef.current.length === 0) return;
+    
+    // Sort queue by priority score:
+    // Keyframes (divisible by 8) are prioritized. Within keyframes / non-keyframes, sort by distance to current frame.
+    pendingQueueRef.current.sort((a, b) => {
+      const distA = Math.abs(a - targetIndex);
+      const distB = Math.abs(b - targetIndex);
+      
+      const isKeyA = a % 8 === 0 || a === 0 || a === TOTAL_FRAMES - 1;
+      const isKeyB = b % 8 === 0 || b === 0 || b === TOTAL_FRAMES - 1;
+      
+      const scoreA = isKeyA ? distA / 10 : distA;
+      const scoreB = isKeyB ? distB / 10 : distB;
+      
+      return scoreA - scoreB;
+    });
+    
+    const MAX_CONCURRENT = 4;
+    const slotsAvailable = MAX_CONCURRENT - loadingSetRef.current.size;
+    
+    for (let i = 0; i < slotsAvailable && i < pendingQueueRef.current.length; i++) {
+      const nextIdx = pendingQueueRef.current[i];
+      loadFrame(nextIdx);
     }
+  };
+
+  // Preload first frame immediately, queue the rest when it's done
+  useEffect(() => {
+    const firstImg = new Image();
+    firstImg.src = currentFrame(1);
+    firstImg.onload = () => {
+      imagesRef.current[0] = firstImg;
+      setFirstLoaded(true);
+      requestAnimationFrame(() => renderFrame(progressRef.current));
+      
+      // Initialize queue with all other frame indices
+      const queue = [];
+      for (let i = 1; i < TOTAL_FRAMES; i++) {
+        queue.push(i);
+      }
+      pendingQueueRef.current = queue;
+      startNextDownloads();
+    };
+    firstImg.onerror = () => {
+      console.error("Failed to load first frame");
+      setFirstLoaded(true);
+      const queue = [];
+      for (let i = 0; i < TOTAL_FRAMES; i++) {
+        queue.push(i);
+      }
+      pendingQueueRef.current = queue;
+      startNextDownloads();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Update refs and trigger prioritized downloads when scroll progress changes
+  useEffect(() => {
+    progressRef.current = progress;
+    targetIndexRef.current = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.floor(progress * TOTAL_FRAMES)));
+    requestAnimationFrame(() => renderFrame(progress));
+    startNextDownloads();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progress]);
 
   // Set canvas size and render on resize
   useEffect(() => {
@@ -81,7 +166,7 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
       if (canvasRef.current) {
         canvasRef.current.width = window.innerWidth;
         canvasRef.current.height = window.innerHeight;
-        requestAnimationFrame(() => renderFrame(progress));
+        requestAnimationFrame(() => renderFrame(progressRef.current));
       }
     };
     window.addEventListener('resize', updateSize);
@@ -89,11 +174,6 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
     return () => window.removeEventListener('resize', updateSize);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // Render when progress changes
-  useEffect(() => {
-    requestAnimationFrame(() => renderFrame(progress));
-  }, [progress]);
 
   return (
     <div className="fixed inset-0 w-full h-full z-0 bg-[#0a0a0a] pointer-events-none">
