@@ -91,7 +91,7 @@ export default function CompareView({
 
     if (hasNexon && hasMG && hasCreta) {
       return {
-        verdict: "Tata Nexon.ev Max emerges as the most cost-effective entry point for standard zero-emission commuting. However, if your long-run goals prioritize highway cruising and interior soft-touch luxury, the MG ZS EV Excite’s higher battery capacity (50.3 kWh) justifies its price premium. The Hyundai Creta Electric holds strong anticipated styling and resale trust, but is pending physical volume deliveries.",
+        verdict: "Tata Nexon EV emerges as the most cost-effective entry point for standard zero-emission commuting. However, if your long-run goals prioritize highway cruising and interior soft-touch luxury, the MG ZS EV Excite’s higher battery capacity (50.3 kWh) justifies its price premium. The Hyundai Creta Electric holds strong anticipated styling and resale trust, but is pending physical volume deliveries.",
         highlight1: "Tata Nexon EV is the ultimate budget winner starting under ₹15 Lakh.",
         highlight2: "MG ZS EV Excite champions pure motor performance delivering 174.33 bhp."
       };

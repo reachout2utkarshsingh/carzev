@@ -26,7 +26,7 @@ export default function Footer({ setCurrentPage, setSelectedCategory }: FooterPr
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-12 border-b border-[#414750]/20">
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 font-sans">EV News Highlight</h4>
-            <p className="text-xs text-[#8b919b] leading-relaxed mb-3">Tata Motors launches the ultra-premium Nexon.ev LR series in Delhi with enhanced regenerative braking pads.</p>
+            <p className="text-xs text-[#8b919b] leading-relaxed mb-3">Tata Motors launches the ultra-premium Nexon EV in Delhi with enhanced regenerative braking pads.</p>
             <span className="text-xs text-[#9acbff] cursor-pointer hover:underline">Read full article &rarr;</span>
           </div>
           <div>

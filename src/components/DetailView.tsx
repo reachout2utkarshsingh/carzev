@@ -32,7 +32,6 @@ export default function DetailView({
   const [bookingForm, setBookingForm] = useState({
     name: '',
     phone: '',
-    email: '',
     preferredDate: '',
   });
 
@@ -173,7 +172,6 @@ export default function DetailView({
     addTestDriveRequest({
       name: bookingForm.name,
       phone: bookingForm.phone,
-      email: bookingForm.email,
       preferredDate: bookingForm.preferredDate,
       city: selectedCity,
       evId: ev.id,
@@ -272,14 +270,6 @@ export default function DetailView({
               <p className="text-sm text-[#8b919b] mt-1 font-mono">{ev.brand}</p>
             </div>
 
-            {/* Performance Review stars row */}
-            <div className="flex items-center gap-4 py-2 border-y border-[#414750]/15 text-sm">
-              <div className="flex items-center gap-1.5 text-yellow-500 font-bold">
-                <Star className="w-5 h-5 fill-current" />
-                <span>{ev.rating || 4.8}</span>
-              </div>
-              <span className="text-[#8b919b] font-mono">({ev.reviewsCount || 100} Certified Buyers)</span>
-            </div>
 
             {/* Price tag ranges */}
             <div className="space-y-1">
@@ -586,7 +576,7 @@ export default function DetailView({
                   <Coins className="w-5 h-5 text-[#00C896]" />
                 </div>
                 <div>
-                  <span className="text-xs font-bold text-[#00C896] uppercase tracking-wider font-mono">Eco-Utility Engine</span>
+                  <span className="text-xs font-bold text-[#00C896] uppercase tracking-wider font-mono">Savings Calculator</span>
                   <h3 className="text-lg font-extrabold text-white font-sans mt-0.5">
                     Operating Cost & Savings Calculator
                   </h3>
@@ -754,27 +744,27 @@ export default function DetailView({
                 <span className="text-white capitalize font-bold">{ev.category}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-[#414750]/10">
-                <span className="text-[#8b919b]">Nominal Battery Capacity</span>
+                <span className="text-[#8b919b]">Battery Capacity</span>
                 <span className="text-white font-semibold">{ev.battery}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-[#414750]/10">
-                <span className="text-[#8b919b]">Peak Engine Output</span>
+                <span className="text-[#8b919b]">Power</span>
                 <span className="text-white font-semibold">{ev.power}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-[#414750]/10">
-                <span className="text-[#8b919b]">Peak Engine Torque</span>
+                <span className="text-[#8b919b]">Torque</span>
                 <span className="text-white font-semibold">{ev.torque || 'N/A'}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-[#414750]/10">
-                <span className="text-[#8b919b]">AC Home Charging (10-100%)</span>
+                <span className="text-[#8b919b]">Home Charging</span>
                 <span className="text-white font-semibold">{ev.chargingAC || 'N/A (Standard 15A)'}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-[#414750]/10">
-                <span className="text-[#8b919b]">DC Fast Charging Capabilities</span>
+                <span className="text-[#8b919b]">Fast Charging</span>
                 <span className="text-white font-semibold">{ev.chargingDC || ev.chargingTime}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-[#414750]/10">
-                <span className="text-[#8b919b]">Velocity Limit (Top Speed)</span>
+                <span className="text-[#8b919b]">Top Speed</span>
                 <span className="text-white font-semibold">{ev.topSpeed || 'N/A'}</span>
               </div>
             </div>
@@ -835,7 +825,7 @@ export default function DetailView({
                 <CheckCircle className="w-16 h-16 text-[#00C896] animate-bounce" />
                 <h3 className="text-2xl font-bold text-white tracking-tight">Test Drive Scheduled!</h3>
                 <p className="text-xs text-[#8b919b] max-w-sm leading-relaxed">
-                  Success! A booking representative from our {selectedCity} certified flagship hub has allocated a <strong className="text-white">{ev.name}</strong> for you. We have sent a confirmation to <strong className="text-[#9acbff]">{bookingForm.email}</strong>.
+                  Success! A booking representative from our {selectedCity} certified flagship hub has allocated a <strong className="text-white">{ev.name}</strong> for you.
                 </p>
                 <button
                   onClick={() => {
@@ -881,17 +871,6 @@ export default function DetailView({
                     <Phone className="w-4 h-4 text-[#8b919b] absolute left-3.5 top-1/2 -translate-y-1/2" />
                   </div>
 
-                  <div className="relative">
-                    <input
-                      type="email"
-                      required
-                      placeholder="Your Active Email Address"
-                      value={bookingForm.email}
-                      onChange={(e) => setBookingForm({...bookingForm, email: e.target.value})}
-                      className="w-full bg-[#111317] border border-[#414750] rounded-xl py-3 pl-10 pr-4 text-xs text-[#e2e2e8] focus:border-[#00C896] focus:outline-none transition-all"
-                    />
-                    <Mail className="w-4 h-4 text-[#8b919b] absolute left-3.5 top-1/2 -translate-y-1/2" />
-                  </div>
 
                   <div className="relative">
                     <input

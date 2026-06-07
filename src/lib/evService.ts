@@ -1,15 +1,14 @@
 import { db } from "./firebase";
 import { collection, getDocs, doc, getDoc, addDoc } from "firebase/firestore";
 import { EVModel } from "../types";
+import { evModels } from "../data/evData";
 
 export async function getAllEVs(): Promise<EVModel[]> {
-  const snapshot = await getDocs(collection(db, "ev_models"));
-  return snapshot.docs.map(doc => doc.data() as EVModel);
+  return [...evModels];
 }
 
 export async function getEVById(id: string): Promise<EVModel | null> {
-  const snapshot = await getDoc(doc(db, "ev_models", id));
-  return snapshot.exists() ? (snapshot.data() as EVModel) : null;
+  return evModels.find(ev => ev.id === id) || null;
 }
 
 export async function getFeaturedEVs(): Promise<EVModel[]> {

@@ -425,7 +425,7 @@ export default function HomeView({
             <Sparkles className="w-12 h-12 text-[#01c896] animate-pulse drop-shadow-[0_0_20px_rgba(0,200,150,0.5)]" />
             <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-white leading-tight drop-shadow-xl px-2">Need a Personalized Recommendation?</h2>
             <p className="text-white/80 text-sm md:text-lg max-w-2xl leading-relaxed font-light drop-shadow-md">
-              Unsure whether to buy Nexon.ev LR or MG ZS EV? Compare them instantly in our side-by-side grid, or search listings using your strict budget and range goals.
+              Unsure whether to buy Nexon EV or MG ZS EV? Compare them instantly in our side-by-side grid, or search listings using your strict budget and range goals.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm sm:max-w-lg pt-4">
               <button 

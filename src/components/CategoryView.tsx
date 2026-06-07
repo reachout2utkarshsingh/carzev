@@ -138,9 +138,6 @@ export default function CategoryView({
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-sans">
               Electric Vehicle Catalog
             </h1>
-            <p className="text-xs text-[#8b919b] mt-1.5 font-mono">
-              Home &gt; Listings {selectedCategory !== 'all' && `> ${selectedCategory}`}
-            </p>
           </div>
           
           <div className="flex items-center gap-3">
@@ -154,7 +151,7 @@ export default function CategoryView({
               className="bg-[#1a1c20] text-xs font-semibold text-white border border-[#414750]/60 rounded-xl px-3 py-2 cursor-pointer focus:outline-none focus:border-[#9acbff]"
               id="sort-select"
             >
-              <option value="rank">Popularity & Rating</option>
+              <option value="rank">Popularity</option>
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
               <option value="range-desc">Battery Range: Longest</option>
@@ -181,28 +178,6 @@ export default function CategoryView({
               </button>
             </div>
 
-            {/* A1. Category Pills Choice */}
-            <div>
-              <p className="text-xs font-bold text-[#8b919b] uppercase tracking-wider mb-3">Vehicle Type</p>
-              <div className="flex flex-col gap-1.5">
-                {(['all', 'cars'/*, 'two-wheelers', 'commercial'*/] as const).map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`w-full py-2 px-3 text-left text-xs font-bold rounded-xl border transition-all flex items-center justify-between ${
-                      selectedCategory === cat
-                        ? 'bg-[#1b6ca8]/10 text-[#9acbff] border-[#1b6ca8]'
-                        : 'bg-[#111317] text-[#c0c7d1] border-[#414750]/20 hover:border-[#8b919b]'
-                    }`}
-                  >
-                    <span className="capitalize">
-                      {cat === 'all' ? 'All Vehicles' : cat}
-                    </span>
-                    {selectedCategory === cat && <Check className="w-3.5 h-3.5" />}
-                  </button>
-                ))}
-              </div>
-            </div>
 
             {/* A2. Price Range Slider */}
             <div>
@@ -297,18 +272,6 @@ export default function CategoryView({
               </div>
             </div>
 
-            {/* A6. New Launch Filter Pill */}
-            <div className="pt-4 border-t border-[#414750]/20">
-              <label className="flex items-center justify-between cursor-pointer">
-                <span className="text-xs font-bold text-[#c0c7d1]">Show only New Launches</span>
-                <input
-                  type="checkbox"
-                  checked={filterNewLaunches}
-                  onChange={(e) => setFilterNewLaunches(e.target.checked)}
-                  className="w-4 h-4 rounded text-[#1b6ca8]"
-                />
-              </label>
-            </div>
 
           </div>
 

@@ -38,43 +38,7 @@ export default function ConsultationView({ setCurrentPage, selectedCity }: Consu
     }
   };
 
-  const newBuyerExperts = [
-    {
-      name: "Amit Verma",
-      role: "Cost & Subsidy Advisor",
-      specialty: "FAME-II, State Road-Tax Exclusions, Total Cost of Ownership (TCO) Modelling",
-      experience: "8+ Years in Auto Finance",
-      rating: 4.9,
-      reviews: 142
-    },
-    {
-      name: "Neha Sharma",
-      role: "EV Selection Consultant",
-      specialty: "EV Matchmaking, Range Requirements Analyser, Driving Dynamics Diagnostics",
-      experience: "6+ Years in EV Technical Journalism",
-      rating: 4.8,
-      reviews: 96
-    }
-  ];
 
-  const evOwnerExperts = [
-    {
-      name: "Vikram Malhotra",
-      role: "Range & Battery Specialist",
-      specialty: "Cell Health Optimization, Thermal Performance, Regenerative Braking Tuning",
-      experience: "10+ Years in Battery Engineering",
-      rating: 5.0,
-      reviews: 210
-    },
-    {
-      name: "Priyanka Rao",
-      role: "Charging Infrastructure Engineer",
-      specialty: "Home Charger Allocation, Residential Solar-EV Integrations, Smart Grid Audits",
-      experience: "7+ Years in Charging Solutions",
-      rating: 4.9,
-      reviews: 118
-    }
-  ];
 
   return (
     <div className="bg-[#111317] min-h-screen pt-24 pb-16 text-[#e2e2e8]">
@@ -102,86 +66,7 @@ export default function ConsultationView({ setCurrentPage, selectedCity }: Consu
           </p>
         </div>
 
-        {/* 2-Section Grid (EV Owners / New Buyers) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          
-          {/* Section 1: For New Buyers */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3 border-b border-[#414750]/20 pb-4">
-              <div className="p-2.5 bg-[#9acbff]/10 rounded-xl text-[#9acbff]">
-                <HelpCircle className="w-6 h-6" />
-              </div>
-              <div>
-                <h2 className="text-xl font-bold text-white font-sans">For Aspiring & New Buyers</h2>
-                <p className="text-xs text-[#8b919b] mt-0.5">Need help choosing your first electric vehicle?</p>
-              </div>
-            </div>
 
-            <div className="space-y-4">
-              {newBuyerExperts.map((exp, idx) => (
-                <div key={idx} className="bg-[#1a1c20] p-6 rounded-2xl border border-[#414750]/20 flex gap-4 items-start hover:border-[#9acbff]/45 transition-colors">
-                  <div className="w-12 h-12 rounded-full bg-[#111317] flex items-center justify-center font-bold text-[#9acbff] border border-[#414750]/30 flex-shrink-0 text-sm">
-                    {exp.name.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <div className="flex-1 space-y-1.5 min-w-0">
-                    <div className="flex justify-between items-baseline gap-2">
-                      <h4 className="text-sm font-bold text-white font-sans truncate">{exp.name}</h4>
-                      <div className="flex items-center gap-1 text-xs text-yellow-500 font-bold flex-shrink-0">
-                        <Star className="w-3.5 h-3.5 fill-current" />
-                        <span>{exp.rating}</span>
-                      </div>
-                    </div>
-                    <p className="text-xs text-[#9acbff] font-semibold leading-none">{exp.role}</p>
-                    <p className="text-xs text-[#8b919b] leading-normal mt-1"><strong className="text-[#c0c7d1]">Specialty:</strong> {exp.specialty}</p>
-                    <div className="flex gap-4 pt-2 text-[10px] text-[#8b919b] font-mono border-t border-[#414750]/10 mt-2">
-                      <span>{exp.experience}</span>
-                      <span>({exp.reviews} sessions completed)</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Section 2: For EV Owners */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3 border-b border-[#414750]/20 pb-4">
-              <div className="p-2.5 bg-[#00C896]/10 rounded-xl text-[#00C896]">
-                <BatteryCharging className="w-6 h-6" />
-              </div>
-              <div>
-                <h2 className="text-xl font-bold text-white font-sans">For Existing EV Owners</h2>
-                <p className="text-xs text-[#8b919b] mt-0.5">Need range optimization or battery diagnostic support?</p>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              {evOwnerExperts.map((exp, idx) => (
-                <div key={idx} className="bg-[#1a1c20] p-6 rounded-2xl border border-[#414750]/20 flex gap-4 items-start hover:border-[#00C896]/45 transition-colors">
-                  <div className="w-12 h-12 rounded-full bg-[#111317] flex items-center justify-center font-bold text-[#00C896] border border-[#414750]/30 flex-shrink-0 text-sm">
-                    {exp.name.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <div className="flex-1 space-y-1.5 min-w-0">
-                    <div className="flex justify-between items-baseline gap-2">
-                      <h4 className="text-sm font-bold text-white font-sans truncate">{exp.name}</h4>
-                      <div className="flex items-center gap-1 text-xs text-yellow-500 font-bold flex-shrink-0">
-                        <Star className="w-3.5 h-3.5 fill-current" />
-                        <span>{exp.rating}</span>
-                      </div>
-                    </div>
-                    <p className="text-xs text-[#00C896] font-semibold leading-none">{exp.role}</p>
-                    <p className="text-xs text-[#8b919b] leading-normal mt-1"><strong className="text-[#c0c7d1]">Specialty:</strong> {exp.specialty}</p>
-                    <div className="flex gap-4 pt-2 text-[10px] text-[#8b919b] font-mono border-t border-[#414750]/10 mt-2">
-                      <span>{exp.experience}</span>
-                      <span>({exp.reviews} sessions completed)</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-        </div>
 
         {/* Submit Form Component */}
         <div className="max-w-xl mx-auto bg-[#1a1c20] border border-[#414750]/30 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden" id="consultation-form-section">

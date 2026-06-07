@@ -24,7 +24,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: true,
     newLaunch: false,
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/2022_Tata_Tiago_EV_IB_XZ%2B_Tech_LR_front_view.png/1280px-2022_Tata_Tiago_EV_IB_XZ%2B_Tech_LR_front_view.png',
+    image: '/Thumbnail/Tata/tiagoev.png',
     thumbnails: [],
     pros: [
       'Most affordable entry-level electric hatchback in India',
@@ -62,7 +62,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: false,
     newLaunch: false,
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/TATA_Tigor_at_Shillong_Peak_View_%28cropped%29.jpg/1280px-TATA_Tigor_at_Shillong_Peak_View_%28cropped%29.jpg',
+    image: '/Thumbnail/Tata/tigorev.png',
     thumbnails: [],
     pros: [
       'Spacious 316-litre sedan boot space for weekend bags',
@@ -99,7 +99,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: true,
     newLaunch: true,
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/2021_Tata_Punch_Creative_%28India%29_front_view_01.png/1280px-2021_Tata_Punch_Creative_%28India%29_front_view_01.png',
+    image: '/Thumbnail/Tata/punchev.png',
     thumbnails: [],
     pros: [
       'Built on Tatas new pure-EV Acti.ev platform architecture',
@@ -137,7 +137,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: true,
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Tata_Nexon_Blue_Dual_Tone.jpg/1280px-Tata_Nexon_Blue_Dual_Tone.jpg',
+    image: '/Thumbnail/Tata/nexonev.png',
     thumbnails: [
       'https://lh3.googleusercontent.com/aida-public/AB6AXuB5byx1iKKZE_1vnaVZwTXKjWq5oM2YKfkWrDJMFDrvF1c7O-zZzCf02-I7-wKLonLIErSLCsvL7O81GP65vtWQZGysqvlYPGgp1LIDuJJ9P3l76__L7VdgwRR4ym-Cw7CQicNs1QXgbdEjd_Njo4IjKAu3SxrxbV_I-E6N-0DmrNAM0Yli-rE-shOH75jKpM3ilHJfh_BpmLc5957uBclzBnFS8WAh4rN9mYl2n0yFtoqn_ChG-2EwN1F3Qycz-m7ie2uFoGeQrBH5',
       'https://lh3.googleusercontent.com/aida-public/AB6AXuALTiU9mo2360QbfT0WdJgi3efQ6WcHHS90XS3aypNtMxRuYHu-dckofD-5WeWPdGegeM6B4KeeV8qNXk0I4CwDeOkElQZIB7DRi9ui1UVEMUAXeKmZLqfi8NJniir0ikla_ikJ8oomu7Kff1onqSdgCXEbtHh2524xNp1MbM1b7dBjtGDcO27rBuOGBx1BVoreaarpJnYcYYZ1WfBkj2XWlSr7x9MZt5oGrkGVxmLKmD3oQpQRHWbwa-GxImjQrPUnBCvlSTkmnmGp',
@@ -181,7 +181,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDm-1WAymmr2CNrBLGHpPponT4SDblleXe4Da4C6hpoU35Km9ZAvcrZkeGmnQGWjXtMHGVXikrGKSF5BPJkM7ONu9-jqGoE36Sc4b_fP1RwEL-LYi9UbqH_l7yFLRCQpjq-pbxb1Cck8SOrpJFUYFBaxnNpzmgyE3FHGhJZeHEeJOLsWfbu7R0wj0yvWpcC8f9YWdKqdNttEawx2M94LhVR2khAr_1d8AmJaqTQd2EnoL3W3Y5qT1zcYE3SAoSGdFvNZpQFdFvS8l4O',
+    image: '/Thumbnail/Tata/curvvev.png',
     thumbnails: [],
     pros: [
       'Striking and unique coupe SUV styling language',
@@ -219,7 +219,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: false,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDm-1WAymmr2CNrBLGHpPponT4SDblleXe4Da4C6hpoU35Km9ZAvcrZkeGmnQGWjXtMHGVXikrGKSF5BPJkM7ONu9-jqGoE36Sc4b_fP1RwEL-LYi9UbqH_l7yFLRCQpjq-pbxb1Cck8SOrpJFUYFBaxnNpzmgyE3FHGhJZeHEeJOLsWfbu7R0wj0yvWpcC8f9YWdKqdNttEawx2M94LhVR2khAr_1d8AmJaqTQd2EnoL3W3Y5qT1zcYE3SAoSGdFvNZpQFdFvS8l4O',
+    image: '/Thumbnail/Tata/harrierev.png',
     thumbnails: [],
     pros: [
       'Authoritative and commanding street presence with rugged styling',
@@ -256,7 +256,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: true,
     newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSlFJ17EcqhDXo-hhxIhYuPxPk6TfTnn1gB9JyGEAiUescggSrzwdo6yLF2PRXqPfiqemHCL8c3IZf-1MU-xbjEENHtMPVq1i4EQouwEkLWU_n7a-LsszBcDnPIWb-MnyjxG-XGOcRG-RN7ctpgWZdab_dJKYixAVMhJNnolMnP_nI2hJtTaYXcwOPUBqVq7q_3OraAg2Tc66dP7l5u0wHUx-OuGnwdgVAj3KYABog6nrZpyc2NnIlS5O4g4_uzWu30V1k-DeV8YWa',
+    image: '/Thumbnail/Mahindra/xuv3xoev.png',
     thumbnails: [],
     pros: [
       'Longest wheelbase in its segment offering superior rear legroom',
@@ -293,7 +293,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSlFJ17EcqhDXo-hhxIhYuPxPk6TfTnn1gB9JyGEAiUescggSrzwdo6yLF2PRXqPfiqemHCL8c3IZf-1MU-xbjEENHtMPVq1i4EQouwEkLWU_n7a-LsszBcDnPIWb-MnyjxG-XGOcRG-RN7ctpgWZdab_dJKYixAVMhJNnolMnP_nI2hJtTaYXcwOPUBqVq7q_3OraAg2Tc66dP7l5u0wHUx-OuGnwdgVAj3KYABog6nrZpyc2NnIlS5O4g4_uzWu30V1k-DeV8YWa',
+    image: '/Thumbnail/Mahindra/be6eev.png',
     thumbnails: [],
     pros: [
       'Futuristic, fighter-jet cockpit design with dual screens',
@@ -330,7 +330,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSlFJ17EcqhDXo-hhxIhYuPxPk6TfTnn1gB9JyGEAiUescggSrzwdo6yLF2PRXqPfiqemHCL8c3IZf-1MU-xbjEENHtMPVq1i4EQouwEkLWU_n7a-LsszBcDnPIWb-MnyjxG-XGOcRG-RN7ctpgWZdab_dJKYixAVMhJNnolMnP_nI2hJtTaYXcwOPUBqVq7q_3OraAg2Tc66dP7l5u0wHUx-OuGnwdgVAj3KYABog6nrZpyc2NnIlS5O4g4_uzWu30V1k-DeV8YWa',
+    image: '/Thumbnail/Mahindra/xev9eev.png',
     thumbnails: [],
     pros: [
       'Massive triple-screen dashboard layout for immersive tech',
@@ -343,6 +343,43 @@ export const evModels: EVModel[] = [
       'Slight body roll on sharp curves due to high stance'
     ],
     description: 'The Mahindra XEV 9e is a flagship premium electric SUV. Showcasing a spectacular triple-screen dashboard, RWD dynamics, and luxurious space, it is tailored for buyers seeking tech-loaded comfort and strong performance.'
+  },
+  {
+    id: 'xev-9s',
+    name: 'XEV 9S',
+    brand: 'Mahindra',
+    category: 'cars',
+    priceMin: 19.95,
+    priceMax: 29.45,
+    range: 679,
+    rangeType: 'MIDC',
+    battery: '79 kWh',
+    power: '286 bhp',
+    torque: '380 Nm',
+    topSpeed: '170 kmph',
+    acceleration: '7.0 seconds',
+    chargingTime: '20 mins (20-80% DC)',
+    chargingAC: '11 kW AC',
+    chargingDC: '175 kW DC',
+    rating: 4.8,
+    reviewsCount: 35,
+    seatingCapacity: 7,
+    featured: true,
+    popular: true,
+    newLaunch: true,
+    image: '/Thumbnail/Mahindra/xev9s.png',
+    thumbnails: [],
+    pros: [
+      'Spacious three-row, 7-seater layout designed for large family comfort',
+      'Massive triple 12.3-inch screen setup powered by Snapdragon processor',
+      'Excellent real-world range with ultra-fast 175 kW DC charging'
+    ],
+    cons: [
+      'Large vehicle footprint requires caution in tight spaces',
+      'Third-row seating is best suited for children or shorter journeys',
+      'Ride quality can feel slightly firm on lower speed urban roads'
+    ],
+    description: 'The Mahindra XEV 9S is a premium 7-seater flagship electric SUV built on the born-electric INGLO architecture. Tailored for family comfort and utility, it features a highly sophisticated triple-screen cockpit, RWD configuration, and high fast-charging speed, redefining mid-size electric passenger travel.'
   },
   {
     id: 'comet-ev',
@@ -367,7 +404,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: true,
     newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAyzep5tzuAIfWKtNJ934d750iLMnLrcQ2EYWjrIJ_in5Y92FO4FdO6nDI1e5hNI7Vk48YsPKuTXMHsBEQPdAHoJEaA0SsXP6q2e0abp1H-R5KuINuQqbo6jaH9L80sP_vk_6Hzs8bjpvInxQQJ5OI4VyQZNNPDNqqA8XunX1P-JL7qRC7GWuwntRpra0lczvJzyHQ2-wQyEodtra6btv4I4vNl68PdemVBLcLTztDR2PcuiNVijYzzGzKc1T0LgADc0jTSVEoyfV4-',
+    image: '/Thumbnail/Mg/cometev.png',
     thumbnails: [],
     pros: [
       'Incredibly small turning radius of 4.2m for effortless parking',
@@ -404,7 +441,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAyzep5tzuAIfWKtNJ934d750iLMnLrcQ2EYWjrIJ_in5Y92FO4FdO6nDI1e5hNI7Vk48YsPKuTXMHsBEQPdAHoJEaA0SsXP6q2e0abp1H-R5KuINuQqbo6jaH9L80sP_vk_6Hzs8bjpvInxQQJ5OI4VyQZNNPDNqqA8XunX1P-JL7qRC7GWuwntRpra0lczvJzyHQ2-wQyEodtra6btv4I4vNl68PdemVBLcLTztDR2PcuiNVijYzzGzKc1T0LgADc0jTSVEoyfV4-',
+    image: '/Thumbnail/Mg/windsorev.png',
     thumbnails: [],
     pros: [
       'Aero Lounge rear seats with 135-degree reclined seating comfort',
@@ -441,7 +478,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAyzep5tzuAIfWKtNJ934d750iLMnLrcQ2EYWjrIJ_in5Y92FO4FdO6nDI1e5hNI7Vk48YsPKuTXMHsBEQPdAHoJEaA0SsXP6q2e0abp1H-R5KuINuQqbo6jaH9L80sP_vk_6Hzs8bjpvInxQQJ5OI4VyQZNNPDNqqA8XunX1P-JL7qRC7GWuwntRpra0lczvJzyHQ2-wQyEodtra6btv4I4vNl68PdemVBLcLTztDR2PcuiNVijYzzGzKc1T0LgADc0jTSVEoyfV4-',
+    image: '/Thumbnail/Mg/zsev.png',
     thumbnails: [],
     pros: [
       'Powerful 174.33 bhp motor with instant torque leap',
@@ -480,7 +517,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: false,
     newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAyzep5tzuAIfWKtNJ934d750iLMnLrcQ2EYWjrIJ_in5Y92FO4FdO6nDI1e5hNI7Vk48YsPKuTXMHsBEQPdAHoJEaA0SsXP6q2e0abp1H-R5KuINuQqbo6jaH9L80sP_vk_6Hzs8bjpvInxQQJ5OI4VyQZNNPDNqqA8XunX1P-JL7qRC7GWuwntRpra0lczvJzyHQ2-wQyEodtra6btv4I4vNl68PdemVBLcLTztDR2PcuiNVijYzzGzKc1T0LgADc0jTSVEoyfV4-',
+    image: '/Thumbnail/Mg/m9ev.png',
     thumbnails: [],
     pros: [
       'Superb rear-wheel-drive dynamics with sporty hot hatch handling',
@@ -517,7 +554,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: false,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAyzep5tzuAIfWKtNJ934d750iLMnLrcQ2EYWjrIJ_in5Y92FO4FdO6nDI1e5hNI7Vk48YsPKuTXMHsBEQPdAHoJEaA0SsXP6q2e0abp1H-R5KuINuQqbo6jaH9L80sP_vk_6Hzs8bjpvInxQQJ5OI4VyQZNNPDNqqA8XunX1P-JL7qRC7GWuwntRpra0lczvJzyHQ2-wQyEodtra6btv4I4vNl68PdemVBLcLTztDR2PcuiNVijYzzGzKc1T0LgADc0jTSVEoyfV4-',
+    image: '/Thumbnail/Mg/cybersterev.png',
     thumbnails: [],
     pros: [
       'Breathtaking styling with electric scissor door mechanisms',
@@ -554,7 +591,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSlFJ17EcqhDXo-hhxIhYuPxPk6TfTnn1gB9JyGEAiUescggSrzwdo6yLF2PRXqPfiqemHCL8c3IZf-1MU-xbjEENHtMPVq1i4EQouwEkLWU_n7a-LsszBcDnPIWb-MnyjxG-XGOcRG-RN7ctpgWZdab_dJKYixAVMhJNnolMnP_nI2hJtTaYXcwOPUBqVq7q_3OraAg2Tc66dP7l5u0wHUx-OuGnwdgVAj3KYABog6nrZpyc2NnIlS5O4g4_uzWu30V1k-DeV8YWa',
+    image: '/Thumbnail/Maruti/evitaraev.png',
     thumbnails: [],
     pros: [
       '5-star safety rating from Bharat NCAP for structural safety',
@@ -591,7 +628,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: true,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSlFJ17EcqhDXo-hhxIhYuPxPk6TfTnn1gB9JyGEAiUescggSrzwdo6yLF2PRXqPfiqemHCL8c3IZf-1MU-xbjEENHtMPVq1i4EQouwEkLWU_n7a-LsszBcDnPIWb-MnyjxG-XGOcRG-RN7ctpgWZdab_dJKYixAVMhJNnolMnP_nI2hJtTaYXcwOPUBqVq7q_3OraAg2Tc66dP7l5u0wHUx-OuGnwdgVAj3KYABog6nrZpyc2NnIlS5O4g4_uzWu30V1k-DeV8YWa',
+    image: '/Thumbnail/Toyota/ebellaev.png',
     thumbnails: [],
     pros: [
       'Toyotas premium brand appeal with high-quality interior panels',
@@ -628,7 +665,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: false,
     newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBYH_-NrJ3RNb6ebmNWNKVBXXobmDrBcWQHFNGQ7-XuC-14SksEdYbGGdPIFRE10nRkTt4PqKTnZJZPJ70wcaF8j0koqgJ2SxV-Ni8GhAAKABmcd3TrNIpu4rVQfGCoe_nqJtGsze-osf1QOmqQUcyoEDh083H6vEmEcbon93Yz5LyMpVeredbJqrciKjFNbFHPV2nRZtEfXKcg93LjNmwzDYCNXOTu2nw1Ht6G33ew_ryCJ-hBgxHMtofWDRaiLofS6ksSKFYy0YHL',
+    image: '/Thumbnail/Hyundai/ioniqev.png',
     thumbnails: [],
     pros: [
       'Incredible instant torque of 395 Nm for strong acceleration',
@@ -665,7 +702,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBYH_-NrJ3RNb6ebmNWNKVBXXobmDrBcWQHFNGQ7-XuC-14SksEdYbGGdPIFRE10nRkTt4PqKTnZJZPJ70wcaF8j0koqgJ2SxV-Ni8GhAAKABmcd3TrNIpu4rVQfGCoe_nqJtGsze-osf1QOmqQUcyoEDh083H6vEmEcbon93Yz5LyMpVeredbJqrciKjFNbFHPV2nRZtEfXKcg93LjNmwzDYCNXOTu2nw1Ht6G33ew_ryCJ-hBgxHMtofWDRaiLofS6ksSKFYy0YHL',
+    image: '/Thumbnail/Hyundai/ioniqev.png',
     thumbnails: [],
     pros: [
       'Stunning, retro-futuristic pixel design',
@@ -703,7 +740,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: false,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSlFJ17EcqhDXo-hhxIhYuPxPk6TfTnn1gB9JyGEAiUescggSrzwdo6yLF2PRXqPfiqemHCL8c3IZf-1MU-xbjEENHtMPVq1i4EQouwEkLWU_n7a-LsszBcDnPIWb-MnyjxG-XGOcRG-RN7ctpgWZdab_dJKYixAVMhJNnolMnP_nI2hJtTaYXcwOPUBqVq7q_3OraAg2Tc66dP7l5u0wHUx-OuGnwdgVAj3KYABog6nrZpyc2NnIlS5O4g4_uzWu30V1k-DeV8YWa',
+    image: '/Thumbnail/Maruti/cretaev.png',
     thumbnails: [],
     pros: [
       'Iconic, authoritative Creta stance with modern aerodynamic grid',
@@ -741,7 +778,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBYH_-NrJ3RNb6ebmNWNKVBXXobmDrBcWQHFNGQ7-XuC-14SksEdYbGGdPIFRE10nRkTt4PqKTnZJZPJ70wcaF8j0koqgJ2SxV-Ni8GhAAKABmcd3TrNIpu4rVQfGCoe_nqJtGsze-osf1QOmqQUcyoEDh083H6vEmEcbon93Yz5LyMpVeredbJqrciKjFNbFHPV2nRZtEfXKcg93LjNmwzDYCNXOTu2nw1Ht6G33ew_ryCJ-hBgxHMtofWDRaiLofS6ksSKFYy0YHL',
+    image: '/Thumbnail/Kia/Clavisev.png',
     thumbnails: [],
     pros: [
       'Highly practical 7-seater configuration for family utility',
@@ -778,7 +815,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBYH_-NrJ3RNb6ebmNWNKVBXXobmDrBcWQHFNGQ7-XuC-14SksEdYbGGdPIFRE10nRkTt4PqKTnZJZPJ70wcaF8j0koqgJ2SxV-Ni8GhAAKABmcd3TrNIpu4rVQfGCoe_nqJtGsze-osf1QOmqQUcyoEDh083H6vEmEcbon93Yz5LyMpVeredbJqrciKjFNbFHPV2nRZtEfXKcg93LjNmwzDYCNXOTu2nw1Ht6G33ew_ryCJ-hBgxHMtofWDRaiLofS6ksSKFYy0YHL',
+    image: '/Thumbnail/Kia/ev6ev.png',
     thumbnails: [],
     pros: [
       'Stunning and futuristic crossover body design with premium details',
@@ -815,7 +852,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBYH_-NrJ3RNb6ebmNWNKVBXXobmDrBcWQHFNGQ7-XuC-14SksEdYbGGdPIFRE10nRkTt4PqKTnZJZPJ70wcaF8j0koqgJ2SxV-Ni8GhAAKABmcd3TrNIpu4rVQfGCoe_nqJtGsze-osf1QOmqQUcyoEDh083H6vEmEcbon93Yz5LyMpVeredbJqrciKjFNbFHPV2nRZtEfXKcg93LjNmwzDYCNXOTu2nw1Ht6G33ew_ryCJ-hBgxHMtofWDRaiLofS6ksSKFYy0YHL',
+    image: '/Thumbnail/Kia/ev9ev.png',
     thumbnails: [],
     pros: [
       'Ultra-luxurious cabin space with ventilated and massaged second-row seats',
@@ -852,7 +889,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: true,
     newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDjCZ-N-sgT50Fy6FwXFOUA6FBNYd5-hCLOPYBMLqBkyjGr237j3ycRFSH5zgKPDtW0HqObB6cBMPVz9Np0qNAL8IbakSqUEeEkPCwMHzk_DZ9fzQV-O9o-ID0EArQ7M69NYD57iyOESdVFFf2yHEoExSb_IXoFAZH3RX1Q4KapCMpg-dUQ6mHZWCRIRnQyyeHfnSfDcurlxH56RQpLojdRm2BLlXgFG-oz4Bw_6BZV9tqpcbxtX8ZWytP89hGPgBh2DqFyheNYHxke',
+    image: '/Thumbnail/Byd/atto3ev.png',
     thumbnails: [],
     pros: [
       'Ultra-safe proprietary Blade Battery tech',
@@ -890,7 +927,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDjCZ-N-sgT50Fy6FwXFOUA6FBNYd5-hCLOPYBMLqBkyjGr237j3ycRFSH5zgKPDtW0HqObB6cBMPVz9Np0qNAL8IbakSqUEeEkPCwMHzk_DZ9fzQV-O9o-ID0EArQ7M69NYD57iyOESdVFFf2yHEoExSb_IXoFAZH3RX1Q4KapCMpg-dUQ6mHZWCRIRnQyyeHfnSfDcurlxH56RQpLojdRm2BLlXgFG-oz4Bw_6BZV9tqpcbxtX8ZWytP89hGPgBh2DqFyheNYHxke',
+    image: '/Thumbnail/Byd/sealev.png',
     thumbnails: [],
     pros: [
       'Astonishing performance (0-100 in 3.8 seconds on AWD)',
@@ -927,7 +964,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDjCZ-N-sgT50Fy6FwXFOUA6FBNYd5-hCLOPYBMLqBkyjGr237j3ycRFSH5zgKPDtW0HqObB6cBMPVz9Np0qNAL8IbakSqUEeEkPCwMHzk_DZ9fzQV-O9o-ID0EArQ7M69NYD57iyOESdVFFf2yHEoExSb_IXoFAZH3RX1Q4KapCMpg-dUQ6mHZWCRIRnQyyeHfnSfDcurlxH56RQpLojdRm2BLlXgFG-oz4Bw_6BZV9tqpcbxtX8ZWytP89hGPgBh2DqFyheNYHxke',
+    image: '/Thumbnail/Byd/sealion7ev.png',
     thumbnails: [],
     pros: [
       'Very spacious SUV cabin with modern premium dashboard',
@@ -964,7 +1001,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: false,
     newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDjCZ-N-sgT50Fy6FwXFOUA6FBNYd5-hCLOPYBMLqBkyjGr237j3ycRFSH5zgKPDtW0HqObB6cBMPVz9Np0qNAL8IbakSqUEeEkPCwMHzk_DZ9fzQV-O9o-ID0EArQ7M69NYD57iyOESdVFFf2yHEoExSb_IXoFAZH3RX1Q4KapCMpg-dUQ6mHZWCRIRnQyyeHfnSfDcurlxH56RQpLojdRm2BLlXgFG-oz4Bw_6BZV9tqpcbxtX8ZWytP89hGPgBh2DqFyheNYHxke',
+    image: '/Thumbnail/Byd/emax7ev.png',
     thumbnails: [],
     pros: [
       'Massive 580-litre luggage boot space for luggage capacity',
@@ -1001,7 +1038,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: false,
     newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSlFJ17EcqhDXo-hhxIhYuPxPk6TfTnn1gB9JyGEAiUescggSrzwdo6yLF2PRXqPfiqemHCL8c3IZf-1MU-xbjEENHtMPVq1i4EQouwEkLWU_n7a-LsszBcDnPIWb-MnyjxG-XGOcRG-RN7ctpgWZdab_dJKYixAVMhJNnolMnP_nI2hJtTaYXcwOPUBqVq7q_3OraAg2Tc66dP7l5u0wHUx-OuGnwdgVAj3KYABog6nrZpyc2NnIlS5O4g4_uzWu30V1k-DeV8YWa',
+    image: '/Thumbnail/Citroen/ec3ev.png',
     thumbnails: [],
     pros: [
       'Very plush suspension offers segment-leading ride comfort',
@@ -1038,7 +1075,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: false,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSlFJ17EcqhDXo-hhxIhYuPxPk6TfTnn1gB9JyGEAiUescggSrzwdo6yLF2PRXqPfiqemHCL8c3IZf-1MU-xbjEENHtMPVq1i4EQouwEkLWU_n7a-LsszBcDnPIWb-MnyjxG-XGOcRG-RN7ctpgWZdab_dJKYixAVMhJNnolMnP_nI2hJtTaYXcwOPUBqVq7q_3OraAg2Tc66dP7l5u0wHUx-OuGnwdgVAj3KYABog6nrZpyc2NnIlS5O4g4_uzWu30V1k-DeV8YWa',
+    image: '/Thumbnail/Citroen/ec3ev.png',
     thumbnails: [],
     pros: [
       'Versatile 7-seater cabin option in a compact SUV stance',
@@ -1075,7 +1112,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: true,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSlFJ17EcqhDXo-hhxIhYuPxPk6TfTnn1gB9JyGEAiUescggSrzwdo6yLF2PRXqPfiqemHCL8c3IZf-1MU-xbjEENHtMPVq1i4EQouwEkLWU_n7a-LsszBcDnPIWb-MnyjxG-XGOcRG-RN7ctpgWZdab_dJKYixAVMhJNnolMnP_nI2hJtTaYXcwOPUBqVq7q_3OraAg2Tc66dP7l5u0wHUx-OuGnwdgVAj3KYABog6nrZpyc2NnIlS5O4g4_uzWu30V1k-DeV8YWa',
+    image: '/Thumbnail/Vinfast/vf6ev.png',
     thumbnails: [],
     pros: [
       'Premium European styling by world-famous Pininfarina studio',
@@ -1112,7 +1149,7 @@ export const evModels: EVModel[] = [
     featured: true,
     popular: true,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSlFJ17EcqhDXo-hhxIhYuPxPk6TfTnn1gB9JyGEAiUescggSrzwdo6yLF2PRXqPfiqemHCL8c3IZf-1MU-xbjEENHtMPVq1i4EQouwEkLWU_n7a-LsszBcDnPIWb-MnyjxG-XGOcRG-RN7ctpgWZdab_dJKYixAVMhJNnolMnP_nI2hJtTaYXcwOPUBqVq7q_3OraAg2Tc66dP7l5u0wHUx-OuGnwdgVAj3KYABog6nrZpyc2NnIlS5O4g4_uzWu30V1k-DeV8YWa',
+    image: '/Thumbnail/Vinfast/vf7ev.png',
     thumbnails: [],
     pros: [
       'Stunning avant-garde design with signature LED signature wings',
@@ -1149,7 +1186,7 @@ export const evModels: EVModel[] = [
     featured: false,
     popular: false,
     newLaunch: true,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCSlFJ17EcqhDXo-hhxIhYuPxPk6TfTnn1gB9JyGEAiUescggSrzwdo6yLF2PRXqPfiqemHCL8c3IZf-1MU-xbjEENHtMPVq1i4EQouwEkLWU_n7a-LsszBcDnPIWb-MnyjxG-XGOcRG-RN7ctpgWZdab_dJKYixAVMhJNnolMnP_nI2hJtTaYXcwOPUBqVq7q_3OraAg2Tc66dP7l5u0wHUx-OuGnwdgVAj3KYABog6nrZpyc2NnIlS5O4g4_uzWu30V1k-DeV8YWa',
+    image: '/Thumbnail/Vinfast/vfmpv7ev.png',
     thumbnails: [],
     pros: [
       'Very practical 5-seater family SUV cabin layout',
@@ -1162,42 +1199,6 @@ export const evModels: EVModel[] = [
       'Rear styling is conservative compared to sporty VF6 and VF7'
     ],
     description: 'The VinFast VF e34 is an upcoming practical electric SUV designed for urban commutes. Incorporating intelligent connected car services, a roomy interior floor plan, and fast charging, it targets daily family commutes.'
-  },
-  {
-    id: 'tata-ace-ev',
-    name: 'Ace EV',
-    brand: 'Tata Motors',
-    category: 'commercial',
-    priceMin: 11.50,
-    priceMax: 12.80,
-    range: 154,
-    rangeType: 'ARAI',
-    battery: '21.3 kWh',
-    power: '36 bhp',
-    torque: '130 Nm',
-    topSpeed: '80 kmph',
-    acceleration: '12 seconds',
-    chargingTime: '2 hrs (10-80% DC fast)',
-    chargingAC: '3.3 kW AC',
-    chargingDC: '22 kW DC',
-    rating: 4.6,
-    reviewsCount: 84,
-    seatingCapacity: 2,
-    featured: false,
-    popular: false,
-    newLaunch: false,
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDm-1WAymmr2CNrBLGHpPponT4SDblleXe4Da4C6hpoU35Km9ZAvcrZkeGmnQGWjXtMHGVXikrGKSF5BPJkM7ONu9-jqGoE36Sc4b_fP1RwEL-LYi9UbqH_l7yFLRCQpjq-pbxb1Cck8SOrpJFUYFBaxnNpzmgyE3FHGhJZeHEeJOLsWfbu7R0wj0yvWpcC8f9YWdKqdNttEawx2M94LhVR2khAr_1d8AmJaqTQd2EnoL3W3Y5qT1zcYE3SAoSGdFvNZpQFdFvS8l4O',
-    thumbnails: [],
-    pros: [
-      'Acclaimed Tata "Chota Hathi" reliability with EV economy',
-      'Rigid load body handles up to 600kg payload easily',
-      'Vastly lower operational costs for fleet logistics'
-    ],
-    cons: [
-      'Cabin creature comforts are very sparse and utilitarian',
-      'Recharging requires high-capacity commercial depot infrastructure'
-    ],
-    description: 'The Ace EV transitions Indias most reliable cargo mini-truck into the sustainable age. Tailor-made for intra-city hub operations, it keeps fleets running at peak efficiency and zero emission standards.'
   }
 ];
 
@@ -1205,6 +1206,7 @@ export const getPopularEVs = () => evModels.filter(m => m.popular);
 export const getFeaturedEVs = () => evModels.filter(m => m.featured);
 
 export const updateEvModels = (newData: EVModel[]) => {
+  if (newData === evModels) return;
   evModels.length = 0;
   evModels.push(...newData);
 };
