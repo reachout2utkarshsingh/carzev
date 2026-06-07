@@ -12,6 +12,7 @@ interface NavbarProps {
   setSelectedCity: (city: string) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  allEvs: EVModel[];
 }
 
 const CITIES = ["New Delhi", "Mumbai", "Bengaluru", "Pune", "Hyderabad", "Chennai"];
@@ -25,6 +26,7 @@ export default function Navbar({
   setSelectedCity,
   searchQuery,
   setSearchQuery,
+  allEvs
 }: NavbarProps) {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [showCityModal, setShowCityModal] = useState(false);
@@ -40,7 +42,7 @@ export default function Navbar({
 
   // Filter recommendations based on search
   const suggestions = searchQuery.trim()
-    ? evModels.filter((ev) =>
+    ? allEvs.filter((ev) =>
         ev.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         ev.brand.toLowerCase().includes(searchQuery.toLowerCase())
       )
@@ -130,6 +132,15 @@ export default function Navbar({
                 id="link-consultation"
               >
                 Consultation
+              </span>
+              <span
+                onClick={() => handleNavClick('blog')}
+                className={`cursor-pointer text-sm font-semibold tracking-wide transition-colors ${
+                  currentPage === 'blog' ? 'text-[#9acbff]' : 'text-[#c0c7d1] hover:text-[#9acbff]'
+                }`}
+                id="link-blog"
+              >
+                Blog
               </span>
               
               {/* Interactive Tools dropdown panel */}
@@ -333,9 +344,15 @@ export default function Navbar({
               </button>
               <button
                 onClick={() => handleNavClick('consultation')}
-                className="text-left font-medium p-3 bg-[#1a1c20] rounded-xl hover:bg-[#282a2e] text-[#e2e2e8] col-span-2"
+                className="text-left font-medium p-3 bg-[#1a1c20] rounded-xl hover:bg-[#282a2e] text-[#e2e2e8]"
               >
                 Consultation
+              </button>
+              <button
+                onClick={() => handleNavClick('blog')}
+                className="text-left font-medium p-3 bg-[#1a1c20] rounded-xl hover:bg-[#282a2e] text-[#e2e2e8]"
+              >
+                Blog
               </button>
               
               {/* Mobile Calculators */}

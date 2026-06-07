@@ -28,4 +28,15 @@ export interface EVModel {
   description: string;
 }
 
-export type PageType = 'home' | 'listings' | 'detail' | 'compare' | 'savings-calc' | 'emi-calc' | 'consultation' | 'privacy' | 'terms';
+export type PageType = 'home' | 'listings' | 'detail' | 'compare' | 'savings-calc' | 'emi-calc' | 'consultation' | 'privacy' | 'terms' | 'blog' | 'blog-admin' | 'car-admin';
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  content: string;
+  images: string[]; // up to 3 images (base64 or URL)
+  author: string;
+  createdAt: string; // ISO string
+  readTime: string; // e.g. "4 min read"
+}
+

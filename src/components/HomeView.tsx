@@ -16,6 +16,7 @@ interface HomeViewProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   setSelectedBrands: (brands: string[]) => void;
+  allEvs: EVModel[];
 }
 
 const containerVariants = {
@@ -43,15 +44,16 @@ export default function HomeView({
   compareList,
   searchQuery,
   setSearchQuery,
-  setSelectedBrands
+  setSelectedBrands,
+  allEvs
 }: HomeViewProps) {
   const [localSearch, setLocalSearch] = useState(searchQuery);
   
   // Dynamic list of unique brands
   const allBrands = React.useMemo(() => {
-    const brands = evModels.map(ev => ev.brand);
+    const brands = allEvs.map(ev => ev.brand);
     return Array.from(new Set(brands)).sort((a, b) => a.localeCompare(b));
-  }, [evModels]);
+  }, [allEvs]);
 
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -80,7 +82,7 @@ export default function HomeView({
   }, [searchQuery]);
 
   // Extract popular items
-  const popularEVs = evModels.filter(m => m.popular).slice(0, 4);
+  const popularEVs = allEvs.filter(m => m.popular).slice(0, 4);
 
   const handlePillClick = (type: 'cars' | 'scooters' | 'bikes' | 'under5' | 'under10' | 'new') => {
     // Reset filters

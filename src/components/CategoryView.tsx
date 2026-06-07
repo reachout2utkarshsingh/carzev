@@ -18,6 +18,7 @@ interface CategoryViewProps {
   setSearchQuery: (query: string) => void;
   selectedBrands: string[];
   setSelectedBrands: (brands: string[]) => void;
+  allEvs: EVModel[];
 }
 
 export default function CategoryView({
@@ -34,7 +35,8 @@ export default function CategoryView({
   searchQuery,
   setSearchQuery,
   selectedBrands,
-  setSelectedBrands
+  setSelectedBrands,
+  allEvs
 }: CategoryViewProps) {
   // Local states for remaining sidebar filters
   const [minRange, setMinRange] = useState<number>(0);
@@ -43,13 +45,13 @@ export default function CategoryView({
 
   // Extract all existing unique brands for checkbox iteration
   const allBrands = useMemo(() => {
-    const brands = evModels.map(ev => ev.brand);
+    const brands = allEvs.map(ev => ev.brand);
     return Array.from(new Set(brands)).sort((a, b) => a.localeCompare(b));
-  }, [evModels]);
+  }, [allEvs]);
 
   // Filter items matching sidebar settings and search query
   const filteredEVs = useMemo(() => {
-    return evModels.filter((ev) => {
+    return allEvs.filter((ev) => {
       // 1. Search Query check
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();

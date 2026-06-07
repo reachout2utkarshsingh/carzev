@@ -7,9 +7,10 @@ interface EMIViewProps {
   setCurrentPage: (page: PageType) => void;
   onSelectEV: (evId: string) => void;
   selectedCity: string;
+  allEvs: EVModel[];
 }
 
-export default function EMIView({ setCurrentPage, onSelectEV, selectedCity }: EMIViewProps) {
+export default function EMIView({ setCurrentPage, onSelectEV, selectedCity, allEvs }: EMIViewProps) {
   // Preset select models
   const [selectedEvId, setSelectedEvId] = useState<string>('custom');
   const [vehiclePrice, setVehiclePrice] = useState<number>(15.0); // in Lakhs
@@ -20,7 +21,7 @@ export default function EMIView({ setCurrentPage, onSelectEV, selectedCity }: EM
   // Sync price when different EV is selected
   useEffect(() => {
     if (selectedEvId !== 'custom') {
-      const selectedEv = evModels.find(e => e.id === selectedEvId);
+      const selectedEv = allEvs.find(e => e.id === selectedEvId);
       if (selectedEv) {
         setVehiclePrice(selectedEv.priceMin);
         setDownPayment(parseFloat((selectedEv.priceMin * 0.2).toFixed(2)));
@@ -150,7 +151,7 @@ export default function EMIView({ setCurrentPage, onSelectEV, selectedCity }: EM
                   id="ev-preset-select"
                 >
                   <option value="custom">-- Custom Price / Manual Input --</option>
-                  {evModels.map((ev) => (
+                  {allEvs.map((ev) => (
                     <option key={ev.id} value={ev.id}>
                       {ev.brand} {ev.name} (Starts ₹{ev.priceMin}L)
                     </option>
@@ -359,7 +360,7 @@ export default function EMIView({ setCurrentPage, onSelectEV, selectedCity }: EM
                   onClick={() => onSelectEV(selectedEvId)}
                   className="w-full bg-[#1b6ca8] text-white py-3 rounded-xl font-bold text-xs hover:bg-[#114f7d] transition-all flex items-center justify-center gap-2 group shadow-lg"
                 >
-                  Book {evModels.find(e => e.id === selectedEvId)?.name} Now
+                  Book {allEvs.find(e => e.id === selectedEvId)?.name} Now
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               )}

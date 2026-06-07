@@ -1,0 +1,25 @@
+# CARZev: Electric Vehicles in India Database
+
+CARZev is India's most comprehensive database for Electric Vehicles (EVs). It provides price checks, real-world range calculations, side-by-side spec comparisons, state-specific FAME subsidy estimations, and EMI/savings calculators for electric cars, scooters, and bikes.
+
+## Key Web Pages & URLs
+- Home Page (`/`): Dashboard overview, popular electric vehicles, search bar, and top brands.
+- Catalogue listings (`/?page=listings`): Filterable index of electric cars, two-wheelers, and commercial vehicles. Supports filtering by brand, budget (under 5 Lakh, under 10 Lakh, etc.), and launches.
+- Comparison Tool (`/?page=compare`): Side-by-side telemetry comparison of up to 3 EVs.
+- Savings Calculator (`/?page=savings-calc`): Tool to calculate fuel/maintenance cost savings compared to ICE petrol/diesel vehicles.
+- EMI Calculator (`/?page=emi-calc`): Financial estimator for EV loans.
+- Expert Consultation (`/?page=consultation`): Booking portal for local FAME subsidies and road tax advice.
+- Blog (`/?page=blog`): EV news, subsidy guides, and reviews.
+
+## EV Database Coverage
+CARZev contains key specifications, pros, cons, and FAME-II subsidy parameters for:
+- Tata Motors (Tiago EV, Tigor EV, Punch EV, Nexon EV, Curvv EV, Harrier EV)
+- Mahindra (XUV 3XO EV, BE 6e, XEV 9e, XEV 9S)
+- MG Motor (Comet EV, Windsor EV, MG ZS EV, M9 EV, MG Cyberster)
+- BYD (Atto 3, Seal, Sealion 7, e6)
+- Hyundai (Kona Electric, Ioniq 5, Creta Electric)
+- Maruti Suzuki (e Vitara)
+- Toyota (Urban Cruiser Ebella)
+- Kia (Carens EV, EV6, EV9)
+- Citroen (eC3)
+- VinFast (VF6, VF7, VFe34)

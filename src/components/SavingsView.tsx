@@ -7,10 +7,11 @@ interface SavingsViewProps {
   setCurrentPage: (page: PageType) => void;
   onSelectEV: (evId: string) => void;
   selectedCity: string;
+  allEvs: EVModel[];
 }
 
-export default function SavingsView({ setCurrentPage, onSelectEV, selectedCity }: SavingsViewProps) {
-  const [selectedEvId, setSelectedEvId] = useState<string>(evModels[0]?.id || 'custom');
+export default function SavingsView({ setCurrentPage, onSelectEV, selectedCity, allEvs }: SavingsViewProps) {
+  const [selectedEvId, setSelectedEvId] = useState<string>(allEvs[0]?.id || 'custom');
   
   // Custom interactive values
   const [commuteDistance, setCommuteDistance] = useState<number>(60); // daily km
@@ -25,7 +26,7 @@ export default function SavingsView({ setCurrentPage, onSelectEV, selectedCity }
   // Sync variables on selecting different EV model presets
   useEffect(() => {
     if (selectedEvId !== 'custom') {
-      const selectedEv = evModels.find(e => e.id === selectedEvId);
+      const selectedEv = allEvs.find(e => e.id === selectedEvId);
       if (selectedEv) {
         // Extract energy battery
         const matched = selectedEv.battery.match(/(\d+(\.\d+)?)\s*kWh/i);
@@ -126,7 +127,7 @@ export default function SavingsView({ setCurrentPage, onSelectEV, selectedCity }
                   id="sav-ev-preset-select"
                 >
                   <option value="custom">-- Custom Specification Setup --</option>
-                  {evModels.map((ev) => (
+                  {allEvs.map((ev) => (
                     <option key={ev.id} value={ev.id}>
                       {ev.brand} {ev.name} (Range {ev.range} km)
                     </option>
