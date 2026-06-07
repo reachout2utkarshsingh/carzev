@@ -266,7 +266,7 @@ export default function HomeView({
                     <img 
                       src={ev.image} 
                       alt={ev.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100" 
+                      className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100" 
                       referrerPolicy="no-referrer"
                     />
                   </div>

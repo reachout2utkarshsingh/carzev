@@ -217,7 +217,7 @@ export default function DetailView({
               <img 
                 src={activeImage} 
                 alt={ev.name} 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain p-6"
                 referrerPolicy="no-referrer"
               />
               
@@ -235,7 +235,7 @@ export default function DetailView({
                     activeImage === ev.image ? 'border-[#9acbff] ring-2 ring-[#9acbff]/30' : 'border-[#414750]/30 hover:border-[#8b919b]'
                   }`}
                 >
-                  <img src={ev.image} alt="Main" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  <img src={ev.image} alt="Main" className="w-full h-full object-contain p-2" referrerPolicy="no-referrer" />
                 </div>
                 {ev.thumbnails.map((thumb, index) => (
                   <div 
@@ -245,7 +245,7 @@ export default function DetailView({
                       activeImage === thumb ? 'border-[#9acbff] ring-2 ring-[#9acbff]/30' : 'border-[#414750]/30 hover:border-[#8b919b]'
                     }`}
                   >
-                    <img src={thumb} alt={`Thumb ${index}`} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                    <img src={thumb} alt={`Thumb ${index}`} className="w-full h-full object-contain p-2" referrerPolicy="no-referrer" />
                   </div>
                 ))}
               </div>

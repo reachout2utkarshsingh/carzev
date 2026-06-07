@@ -233,7 +233,7 @@ export default function Navbar({
                         <img 
                           src={ev.image} 
                           alt={ev.name} 
-                          className="w-10 h-7 object-cover rounded-md bg-[#111317]"
+                          className="w-10 h-7 object-contain p-0.5 rounded-md bg-[#111317]"
                           referrerPolicy="no-referrer"
                         />
                         <div className="flex-1 min-w-0">
