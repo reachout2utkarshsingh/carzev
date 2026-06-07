@@ -74,7 +74,7 @@ export default function CategoryView({
         }
       }
       // 3. Budget upper limit check
-      if (ev.priceMin > filterBudget) {
+      if (filterBudget < 50 && ev.priceMin > filterBudget) {
         return false;
       }
       // 4. New launch check
@@ -184,14 +184,14 @@ export default function CategoryView({
               <div className="flex justify-between items-center mb-2">
                 <p className="text-xs font-bold text-[#8b919b] uppercase tracking-wider">Upper Price Limit</p>
                 <span className="text-xs font-extrabold text-[#00C896]" id="filter-budget-display">
-                  Under ₹{filterBudget} Lakh
+                  {filterBudget >= 50 ? 'Any Budget' : `Under ₹${filterBudget} Lakh`}
                 </span>
               </div>
               <input
                 type="range"
                 min="1"
                 max="50"
-                value={filterBudget}
+                value={Math.min(filterBudget, 50)}
                 onChange={(e) => setFilterBudget(Number(e.target.value))}
                 className="w-full accent-[#1b6ca8] h-1.5 bg-[#111317] rounded-all cursor-pointer"
                 id="budget-range-input"
