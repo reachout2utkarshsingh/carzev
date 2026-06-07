@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
-import { ShieldAlert, BookOpen, KeyRound, Upload, Trash2, CheckCircle2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ShieldAlert, BookOpen, KeyRound, Upload, Trash2, CheckCircle2, Edit3, PlusCircle, ArrowLeft } from 'lucide-react';
 import { BlogPost, PageType } from '../types';
-import { addBlogPost } from '../lib/blogService';
+import { addBlogPost, updateBlogPost, deleteBlogPost } from '../lib/blogService';
 
 interface BlogAdminViewProps {
+  blogs: BlogPost[];
   setCurrentPage: (page: PageType) => void;
   onDatabaseUpdate?: () => void;
 }
 
-export default function BlogAdminView({ setCurrentPage, onDatabaseUpdate }: BlogAdminViewProps) {
+export default function BlogAdminView({ blogs, setCurrentPage, onDatabaseUpdate }: BlogAdminViewProps) {
   // Authentication State
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authError, setAuthError] = useState('');
 
+  // Mode: 'list' | 'add' | 'edit'
+  const [mode, setMode] = useState<'list' | 'add' | 'edit'>('list');
+  const [blogsList, setBlogsList] = useState<BlogPost[]>([]);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+
   // Blog Fields State
+  const [selectedId, setSelectedId] = useState('');
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('CARZev Editorial');
   const [content, setContent] = useState('');
@@ -23,9 +31,12 @@ export default function BlogAdminView({ setCurrentPage, onDatabaseUpdate }: Blog
   const [images, setImages] = useState<string[]>(['', '', '']);
   const [imageTypes, setImageTypes] = useState<'url' | 'file'[]>(['url', 'url', 'url']);
 
-  // Success Confirmation State
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [createdSlug, setCreatedSlug] = useState('');
+  // Update internal blogs list when props update or authentication state changes
+  useEffect(() => {
+    if (isAuthenticated) {
+      setBlogsList(blogs);
+    }
+  }, [isAuthenticated, blogs]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,14 +48,39 @@ export default function BlogAdminView({ setCurrentPage, onDatabaseUpdate }: Blog
     }
   };
 
+  const handleEditClick = (post: BlogPost) => {
+    setSelectedId(post.id);
+    setTitle(post.title);
+    setAuthor(post.author);
+    setContent(post.content);
+    setImages([
+      post.images[0] || '',
+      post.images[1] || '',
+      post.images[2] || ''
+    ]);
+    setImageTypes(['url', 'url', 'url']);
+    setMode('edit');
+  };
+
+  const handleDeleteClick = async (id: string, postTitle: string) => {
+    if (confirm(`Are you sure you want to delete the article "${postTitle}"?`)) {
+      try {
+        await deleteBlogPost(id);
+        onDatabaseUpdate?.();
+      } catch (err) {
+        alert("Failed to delete the article. Please check your internet connection.");
+      }
+    }
+  };
+
   // Convert local uploaded file to base64
   const handleFileChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate size (limit to 2.5MB to prevent LocalStorage overflows)
+    // Validate size (limit to 2.5MB to prevent overflows)
     if (file.size > 2.5 * 1024 * 1024) {
-      alert("Local image file is too large! Please upload images under 2.5MB to preserve local storage memory.");
+      alert("Local image file is too large! Please upload images under 2.5MB.");
       return;
     }
 
@@ -93,18 +129,32 @@ export default function BlogAdminView({ setCurrentPage, onDatabaseUpdate }: Blog
     const activeImages = images.filter(img => img.trim() !== '');
 
     try {
-      const newPost = await addBlogPost({
-        title: title.trim(),
-        author: author.trim(),
-        content: content.trim(),
-        images: activeImages,
-      });
+      if (mode === 'edit') {
+        const originalPost = blogs.find(b => b.id === selectedId);
+        await updateBlogPost({
+          id: selectedId,
+          title: title.trim(),
+          author: author.trim(),
+          content: content.trim(),
+          images: activeImages,
+          createdAt: originalPost?.createdAt || new Date().toISOString(),
+          readTime: originalPost?.readTime || '1 min read'
+        });
+        setSuccessMessage('Article updated successfully!');
+      } else {
+        await addBlogPost({
+          title: title.trim(),
+          author: author.trim(),
+          content: content.trim(),
+          images: activeImages,
+        });
+        setSuccessMessage('New article published successfully!');
+      }
 
       onDatabaseUpdate?.();
       setIsSuccess(true);
-      setCreatedSlug(newPost.id);
     } catch (err) {
-      alert("Failed to publish blog post to Firestore. Please check your internet connection.");
+      alert("Failed to save article to Firestore. Please check your internet connection.");
     }
   };
 
@@ -115,6 +165,7 @@ export default function BlogAdminView({ setCurrentPage, onDatabaseUpdate }: Blog
     setImages(['', '', '']);
     setImageTypes(['url', 'url', 'url']);
     setIsSuccess(false);
+    setMode('list');
   };
 
   // 1. Password login screen
@@ -173,9 +224,9 @@ export default function BlogAdminView({ setCurrentPage, onDatabaseUpdate }: Blog
           </div>
 
           <div className="space-y-2">
-            <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">Article Published!</h1>
+            <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">{successMessage}</h1>
             <p className="text-xs text-[#8b919b] font-medium leading-relaxed">
-              Your new article has been automatically parsed, reading speed calculated, and sorted into the read-only catalog page.
+              Your article has been successfully compiled, processed, and synced to the cloud database.
             </p>
           </div>
 
@@ -190,7 +241,7 @@ export default function BlogAdminView({ setCurrentPage, onDatabaseUpdate }: Blog
               onClick={handleResetForm}
               className="w-full bg-[#111317] text-[#c0c7d1] border border-[#414750]/30 py-3 font-bold text-xs rounded-xl hover:text-white hover:border-[#8b919b] transition-all cursor-pointer text-center"
             >
-              Write Another Post
+              Back to Articles List
             </button>
           </div>
         </div>
@@ -198,7 +249,124 @@ export default function BlogAdminView({ setCurrentPage, onDatabaseUpdate }: Blog
     );
   }
 
-  // 3. Blog Editor dashboard form
+  // 3. Blog List Dashboard
+  if (mode === 'list') {
+    return (
+      <div className="bg-[#111317] min-h-screen pt-24 pb-16 text-[#e2e2e8]" id="blog-admin-dashboard">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Header toolbar */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#414750]/20 mb-8">
+            <div>
+              <span className="text-[10px] text-[#9acbff] font-mono tracking-widest uppercase font-bold flex items-center gap-1">
+                <BookOpen className="w-3.5 h-3.5" />
+                Publisher Console
+              </span>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-sans mt-1">
+                Articles Management
+              </h1>
+            </div>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => {
+                  setTitle('');
+                  setAuthor('CARZev Editorial');
+                  setContent('');
+                  setImages(['', '', '']);
+                  setImageTypes(['url', 'url', 'url']);
+                  setMode('add');
+                }}
+                className="bg-[#1b6ca8] text-white py-2 px-4 rounded-xl text-xs font-bold hover:bg-[#114f7d] transition-all cursor-pointer flex items-center gap-1.5"
+              >
+                <PlusCircle className="w-4 h-4" />
+                New Article
+              </button>
+              <button
+                onClick={() => setCurrentPage('car-admin')}
+                className="text-xs font-bold text-[#9acbff] hover:text-[#b4d6ff] transition-all cursor-pointer"
+              >
+                Switch to EV Catalog Admin
+              </button>
+              <button
+                onClick={() => setCurrentPage('blog')}
+                className="text-xs font-bold text-[#8b919b] hover:text-white transition-all cursor-pointer"
+              >
+                Exit Console
+              </button>
+            </div>
+          </div>
+
+          {/* Blogs Table */}
+          <div className="bg-[#1a1c20] rounded-2xl border border-[#414750]/30 overflow-hidden">
+            {blogsList.length === 0 ? (
+              <div className="p-12 text-center text-[#8b919b] text-sm">
+                No blog posts available. Click "New Article" to write one!
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-[#414750]/30 bg-[#111317]/50 text-[10px] uppercase font-bold text-[#8b919b] tracking-wider">
+                      <th className="py-4 px-6">Image</th>
+                      <th className="py-4 px-6">Article Title</th>
+                      <th className="py-4 px-6">Author</th>
+                      <th className="py-4 px-6">Date</th>
+                      <th className="py-4 px-6 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#414750]/20 text-xs">
+                    {blogsList.map((blog) => (
+                      <tr key={blog.id} className="hover:bg-[#202329]/40 transition-colors">
+                        <td className="py-4 px-6">
+                          <img 
+                            src={blog.images[0] || 'https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=800'} 
+                            alt={blog.title} 
+                            className="w-12 h-8 object-cover rounded-lg border border-[#414750]/20 bg-[#111317]"
+                          />
+                        </td>
+                        <td className="py-4 px-6 font-semibold text-white max-w-xs truncate">
+                          {blog.title}
+                        </td>
+                        <td className="py-4 px-6 text-[#c0c7d1]">{blog.author}</td>
+                        <td className="py-4 px-6 text-[#8b919b] font-mono">
+                          {new Date(blog.createdAt).toLocaleDateString('en-IN', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric'
+                          })}
+                        </td>
+                        <td className="py-4 px-6 text-right space-x-2">
+                          <button
+                            onClick={() => handleEditClick(blog)}
+                            className="text-[#9acbff] hover:text-[#b4d6ff] p-1.5 rounded bg-[#9acbff]/5 border border-[#9acbff]/20 hover:scale-105 transition-all inline-flex items-center gap-1"
+                            title="Edit Article"
+                          >
+                            <Edit3 className="w-3.5 h-3.5" />
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteClick(blog.id, blog.title)}
+                            className="text-[#ff6e6e] hover:text-[#ff9c9c] p-1.5 rounded bg-[#ff6e6e]/5 border border-[#ff6e6e]/20 hover:scale-105 transition-all inline-flex items-center gap-1"
+                            title="Delete Article"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+        </div>
+      </div>
+    );
+  }
+
+  // 4. Blog Editor dashboard form
   return (
     <div className="bg-[#111317] min-h-screen pt-24 pb-16 text-[#e2e2e8]" id="blog-admin-dashboard">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -211,21 +379,16 @@ export default function BlogAdminView({ setCurrentPage, onDatabaseUpdate }: Blog
               Publisher Console
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-sans mt-1">
-              Create New Article
+              {mode === 'edit' ? 'Edit Article' : 'Create New Article'}
             </h1>
           </div>
           <div className="flex items-center gap-4">
             <button
-              onClick={() => setCurrentPage('car-admin')}
-              className="text-xs font-bold text-[#9acbff] hover:text-[#b4d6ff] transition-all cursor-pointer"
+              onClick={() => setMode('list')}
+              className="text-xs font-bold text-[#8b919b] hover:text-white transition-all cursor-pointer flex items-center gap-1"
             >
-              Switch to EV Catalog Admin
-            </button>
-            <button
-              onClick={() => setCurrentPage('blog')}
-              className="text-xs font-bold text-[#8b919b] hover:text-white transition-all cursor-pointer"
-            >
-              Exit Console
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Back to List
             </button>
           </div>
         </div>
@@ -402,13 +565,13 @@ export default function BlogAdminView({ setCurrentPage, onDatabaseUpdate }: Blog
               onClick={handleResetForm}
               className="bg-[#1a1c20] text-[#c0c7d1] border border-[#414750]/40 py-3 px-8 font-bold text-xs rounded-xl hover:text-white hover:border-[#8b919b] transition-all cursor-pointer text-center"
             >
-              Reset Draft
+              Cancel
             </button>
             <button
               type="submit"
               className="bg-[#1b6ca8] text-white py-3 px-8 font-bold text-xs rounded-xl hover:bg-[#114f7d] transition-all cursor-pointer text-center"
             >
-              Publish Blog Post
+              {mode === 'edit' ? 'Update Article' : 'Publish Blog Post'}
             </button>
           </div>
 

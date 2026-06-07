@@ -1,7 +1,7 @@
 import { BlogPost } from '../types';
 import { seedBlogs } from '../data/blogData';
 import { db } from "./firebase";
-import { collection, getDocs, doc, setDoc } from "firebase/firestore";
+import { collection, getDocs, doc, setDoc, deleteDoc } from "firebase/firestore";
 
 const COLLECTION_NAME = "blog_posts";
 
@@ -60,4 +60,35 @@ export async function addBlogPost(post: Omit<BlogPost, 'id' | 'createdAt' | 'rea
   }
 
   return newPost;
+}
+
+export async function updateBlogPost(post: BlogPost): Promise<BlogPost> {
+  // 1. Calculate reading time
+  const wordCount = post.content.trim().split(/\s+/).length;
+  const minutes = Math.max(1, Math.ceil(wordCount / 200));
+  const readTime = `${minutes} min read`;
+
+  const updatedPost: BlogPost = {
+    ...post,
+    readTime
+  };
+
+  // 2. Persist update to Firestore
+  try {
+    await setDoc(doc(db, COLLECTION_NAME, updatedPost.id), updatedPost);
+  } catch (error) {
+    console.error("Failed to update blog post in Firestore:", error);
+    throw error;
+  }
+
+  return updatedPost;
+}
+
+export async function deleteBlogPost(id: string): Promise<void> {
+  try {
+    await deleteDoc(doc(db, COLLECTION_NAME, id));
+  } catch (error) {
+    console.error("Failed to delete blog post from Firestore:", error);
+    throw error;
+  }
 }

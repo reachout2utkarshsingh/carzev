@@ -427,6 +427,7 @@ export default function App() {
       case 'blog-admin':
         return (
           <BlogAdminView
+            blogs={blogList}
             onDatabaseUpdate={loadBlogs}
             setCurrentPage={setCurrentPage}
           />
