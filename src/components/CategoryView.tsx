@@ -44,8 +44,8 @@ export default function CategoryView({
   // Extract all existing unique brands for checkbox iteration
   const allBrands = useMemo(() => {
     const brands = evModels.map(ev => ev.brand);
-    return Array.from(new Set(brands)).sort();
-  }, []);
+    return Array.from(new Set(brands)).sort((a, b) => a.localeCompare(b));
+  }, [evModels]);
 
   // Filter items matching sidebar settings and search query
   const filteredEVs = useMemo(() => {

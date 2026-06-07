@@ -50,8 +50,8 @@ export default function HomeView({
   // Dynamic list of unique brands
   const allBrands = React.useMemo(() => {
     const brands = evModels.map(ev => ev.brand);
-    return Array.from(new Set(brands)).sort();
-  }, []);
+    return Array.from(new Set(brands)).sort((a, b) => a.localeCompare(b));
+  }, [evModels]);
 
   const containerRef = useRef<HTMLDivElement>(null);
   

@@ -457,7 +457,7 @@ export const evModels: EVModel[] = [
   },
   {
     id: 'mg-zs-ev',
-    name: 'MG ZS EV Excite',
+    name: 'MG ZS EV',
     brand: 'MG Motor',
     category: 'cars',
     priceMin: 18.98,
@@ -495,41 +495,40 @@ export const evModels: EVModel[] = [
     description: 'The MG ZS EV encapsulates high-caliber engineering and sophisticated styling. Housing a robust 50.3 kWh battery pack with a certified 528 km range, it handles interstate drives with premium composure. A quiet, insulated acoustic chamber complements its high-end infotainment suite.'
   },
   {
-    id: 'mg-4-ev',
-    name: 'MG 4 EV',
+    id: 'mg-m9-ev',
+    name: 'M9 EV',
     brand: 'MG Motor',
     category: 'cars',
-    priceMin: 18.00,
-    priceMax: 35.00,
-    range: 450,
-    rangeType: 'WLTP',
-    battery: '51 kWh',
-    power: '170 bhp',
-    torque: '250 Nm',
-    topSpeed: '160 kmph',
-    acceleration: '7.7 seconds',
-    chargingTime: '35 mins (10-80% DC)',
-    chargingAC: '7 kW AC',
-    chargingDC: '150 kW DC',
-    rating: 4.6,
-    reviewsCount: 30,
-    seatingCapacity: 5,
-    featured: false,
-    popular: false,
-    newLaunch: false,
+    priceMin: 69.90,
+    priceMax: 75.00,
+    range: 548,
+    rangeType: 'MIDC',
+    battery: '90 kWh',
+    power: '245 bhp',
+    torque: '350 Nm',
+    topSpeed: '180 kmph',
+    acceleration: '7.9 seconds',
+    chargingTime: '90 mins (10-80% DC fast)',
+    chargingAC: '11 kW AC',
+    chargingDC: '160 kW DC',
+    rating: 4.9,
+    reviewsCount: 25,
+    seatingCapacity: 7,
+    featured: true,
+    popular: true,
+    newLaunch: true,
     image: '/Thumbnail/Mg/m9ev.png',
     thumbnails: [],
     pros: [
-      'Superb rear-wheel-drive dynamics with sporty hot hatch handling',
-      'Slim battery profile allows a lower center of gravity',
-      'Sharp, aggressive styling and rear twin-spoiler detailing'
+      'Ultra-luxurious "Presidential" captain seats in the second row with massage function',
+      'Massive 90 kWh battery pack delivering up to 548 km MIDC range',
+      'Sophisticated Level 2 ADAS suite and advanced passenger safety features'
     ],
     cons: [
-      'Low ground clearance requires caution on tall speed breakers',
-      'Rear seat space is tighter than traditional crossovers',
-      'Boot volume is average due to sporty rear design'
+      'Substantial vehicle dimensions can make urban maneuvering challenging',
+      'Premium price point caters exclusively to high-end luxury buyers'
     ],
-    description: 'The MG 4 EV is a sporty, rear-wheel-drive electric hatchback. Acclaimed globally for its athletic driving physics, high fast-charging capability, and aggressive styling, it targets driving enthusiasts looking for zero-emission fun.'
+    description: 'The MG M9 EV is a premium luxury 7-seater electric MPV engineered for executive travel. Housing a robust 90 kWh battery and a 245 bhp electric motor, it features high fast-charging support, Level 2 active safety aids, and double executive cabin recliners, redefining premium first-class passenger journeys.'
   },
   {
     id: 'mg-cyberster',
@@ -1051,43 +1050,6 @@ export const evModels: EVModel[] = [
       'Lacks essential features like automatic climate control'
     ],
     description: 'The Citroen eC3 is an urban-focused electric crossover hatchback. Known for its class-leading suspension setup and modern infotainment, it handles broken roads with extreme comfort while keeping ownership costs low.'
-  },
-  {
-    id: 'citroen-ec3-aircross',
-    name: 'ëC3 Aircross EV',
-    brand: 'Citroen',
-    category: 'cars',
-    priceMin: 24.50,
-    priceMax: 27.40,
-    range: 300,
-    rangeType: 'WLTP',
-    battery: '44 kWh',
-    power: '113 bhp',
-    torque: '120 Nm',
-    topSpeed: '135 kmph',
-    acceleration: '11.0 seconds',
-    chargingTime: '26 mins (20-80% DC)',
-    chargingAC: '7.4 kW AC',
-    chargingDC: '100 kW DC',
-    rating: 4.4,
-    reviewsCount: 12,
-    seatingCapacity: 7,
-    featured: false,
-    popular: false,
-    newLaunch: true,
-    image: '/Thumbnail/Citroen/ec3ev.png',
-    thumbnails: [],
-    pros: [
-      'Versatile 7-seater cabin option in a compact SUV stance',
-      'Advanced STLA smart platform supports 100 kW DC charging speed',
-      'Classic Citroen styling with heavy customization details'
-    ],
-    cons: [
-      'Power output is modest at 113 bhp for a 7-seater SUV',
-      'Range of 300 km is lower compared to its primary competitors',
-      'Third row is best suited for children only'
-    ],
-    description: 'The Citroen ëC3 Aircross EV (European spec) brings high versatility and comfort to families. With a flexible 7-seater layout, high fast-charging capacity, and rugged styling, it represents a highly functional family package.'
   },
   {
     id: 'vinfast-vf6',
