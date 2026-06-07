@@ -168,8 +168,8 @@ export default function CarAdminView({ allEvs, setCurrentPage, onDatabaseUpdate 
       try {
         await deleteEV(carId);
         onDatabaseUpdate?.();
-      } catch (err) {
-        alert("Failed to delete the vehicle. Please check your internet connection.");
+      } catch (err: any) {
+        alert(`Failed to delete the vehicle. Error: ${err?.message || err}`);
       }
     }
   };

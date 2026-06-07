@@ -67,8 +67,8 @@ export default function BlogAdminView({ blogs, setCurrentPage, onDatabaseUpdate 
       try {
         await deleteBlogPost(id);
         onDatabaseUpdate?.();
-      } catch (err) {
-        alert("Failed to delete the article. Please check your internet connection.");
+      } catch (err: any) {
+        alert(`Failed to delete the article. Error: ${err?.message || err}`);
       }
     }
   };
