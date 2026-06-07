@@ -1,8 +1,9 @@
 import { BlogPost } from '../types';
 import { seedBlogs } from '../data/blogData';
+import { db } from "./firebase";
+import { collection, getDocs, doc, setDoc } from "firebase/firestore";
 
-// Local storage key
-const LOCAL_STORAGE_KEY = 'carzev_blogs';
+const COLLECTION_NAME = "blog_posts";
 
 // Clean helper to generate simple unique slugs from titles
 function generateSlug(title: string): string {
@@ -12,23 +13,31 @@ function generateSlug(title: string): string {
     .replace(/(^-|-$)+/g, '') + '-' + Math.random().toString(36).substring(2, 7);
 }
 
-export function getBlogPosts(): BlogPost[] {
+export async function getBlogPosts(): Promise<BlogPost[]> {
   try {
-    const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
-    const userBlogs: BlogPost[] = localData ? JSON.parse(localData) : [];
-    
-    // Combine seed articles and user added ones
-    const combined = [...userBlogs, ...seedBlogs];
-    
+    const querySnapshot = await getDocs(collection(db, COLLECTION_NAME));
+    if (querySnapshot.empty) {
+      console.log("Firestore blog_posts collection is empty. Seeding default articles...");
+      for (const blog of seedBlogs) {
+        await setDoc(doc(db, COLLECTION_NAME, blog.id), blog);
+      }
+      return [...seedBlogs].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }
+
+    const list: BlogPost[] = [];
+    querySnapshot.forEach((docSnap) => {
+      list.push(docSnap.data() as BlogPost);
+    });
+
     // Sort chronological: Newest first
-    return combined.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   } catch (error) {
-    console.error("Failed to parse blogs from local storage, returning defaults:", error);
-    return [...seedBlogs];
+    console.error("Failed to parse blogs from Firestore, returning defaults:", error);
+    return [...seedBlogs].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 }
 
-export function addBlogPost(post: Omit<BlogPost, 'id' | 'createdAt' | 'readTime'>): BlogPost {
+export async function addBlogPost(post: Omit<BlogPost, 'id' | 'createdAt' | 'readTime'>): Promise<BlogPost> {
   // 1. Calculate reading time
   const wordCount = post.content.trim().split(/\s+/).length;
   const minutes = Math.max(1, Math.ceil(wordCount / 200));
@@ -42,15 +51,12 @@ export function addBlogPost(post: Omit<BlogPost, 'id' | 'createdAt' | 'readTime'
     readTime
   };
 
-  // 3. Persist to localStorage
+  // 3. Persist to Firestore
   try {
-    const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
-    const existingBlogs: BlogPost[] = localData ? JSON.parse(localData) : [];
-    
-    existingBlogs.unshift(newPost); // Insert at beginning of user list
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(existingBlogs));
+    await setDoc(doc(db, COLLECTION_NAME, newPost.id), newPost);
   } catch (error) {
-    console.error("Failed to save new blog to local storage:", error);
+    console.error("Failed to save new blog to Firestore:", error);
+    throw error;
   }
 
   return newPost;

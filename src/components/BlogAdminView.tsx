@@ -5,9 +5,10 @@ import { addBlogPost } from '../lib/blogService';
 
 interface BlogAdminViewProps {
   setCurrentPage: (page: PageType) => void;
+  onDatabaseUpdate?: () => void;
 }
 
-export default function BlogAdminView({ setCurrentPage }: BlogAdminViewProps) {
+export default function BlogAdminView({ setCurrentPage, onDatabaseUpdate }: BlogAdminViewProps) {
   // Authentication State
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -81,7 +82,7 @@ export default function BlogAdminView({ setCurrentPage }: BlogAdminViewProps) {
     setImages(newImages);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !content.trim()) {
       alert("Please fill out the Title and Content fields before publishing.");
@@ -91,15 +92,20 @@ export default function BlogAdminView({ setCurrentPage }: BlogAdminViewProps) {
     // Filter active images
     const activeImages = images.filter(img => img.trim() !== '');
 
-    const newPost = addBlogPost({
-      title: title.trim(),
-      author: author.trim(),
-      content: content.trim(),
-      images: activeImages,
-    });
+    try {
+      const newPost = await addBlogPost({
+        title: title.trim(),
+        author: author.trim(),
+        content: content.trim(),
+        images: activeImages,
+      });
 
-    setIsSuccess(true);
-    setCreatedSlug(newPost.id);
+      onDatabaseUpdate?.();
+      setIsSuccess(true);
+      setCreatedSlug(newPost.id);
+    } catch (err) {
+      alert("Failed to publish blog post to Firestore. Please check your internet connection.");
+    }
   };
 
   const handleResetForm = () => {

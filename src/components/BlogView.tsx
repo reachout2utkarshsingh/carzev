@@ -1,18 +1,15 @@
 import React, { useState, useMemo } from 'react';
 import { Calendar, User, Clock, ArrowLeft, Search, BookOpen } from 'lucide-react';
 import { BlogPost, PageType } from '../types';
-import { getBlogPosts } from '../lib/blogService';
 
 interface BlogViewProps {
+  blogs: BlogPost[];
   setCurrentPage: (page: PageType) => void;
 }
 
-export default function BlogView({ setCurrentPage }: BlogViewProps) {
+export default function BlogView({ blogs, setCurrentPage }: BlogViewProps) {
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-
-  // Fetch blogs dynamically
-  const blogs = useMemo(() => getBlogPosts(), [selectedPostId]);
 
   // Handle post selection
   const selectedPost = useMemo(() => {

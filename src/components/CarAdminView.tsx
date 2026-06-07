@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { ShieldAlert, KeyRound, Upload, Trash2, CheckCircle2, Car, Edit3, PlusCircle, ArrowLeft } from 'lucide-react';
 import { EVModel, PageType } from '../types';
-import { getStoredEVs, saveEV, deleteEV } from '../lib/evService';
+import { saveEV, deleteEV } from '../lib/evService';
 
 interface CarAdminViewProps {
+  allEvs: EVModel[];
   setCurrentPage: (page: PageType) => void;
   onDatabaseUpdate?: () => void;
 }
 
-export default function CarAdminView({ setCurrentPage, onDatabaseUpdate }: CarAdminViewProps) {
+export default function CarAdminView({ allEvs, setCurrentPage, onDatabaseUpdate }: CarAdminViewProps) {
   // Authentication State
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -56,9 +57,9 @@ export default function CarAdminView({ setCurrentPage, onDatabaseUpdate }: CarAd
   // Fetch cars when authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      setCarsList(getStoredEVs());
+      setCarsList(allEvs);
     }
-  }, [isAuthenticated, mode, isSuccess]);
+  }, [isAuthenticated, allEvs]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -162,15 +163,18 @@ export default function CarAdminView({ setCurrentPage, onDatabaseUpdate }: CarAd
     setCons(newCons);
   };
 
-  const handleDeleteClick = (carId: string, carName: string) => {
+  const handleDeleteClick = async (carId: string, carName: string) => {
     if (confirm(`Are you sure you want to delete "${carName}" from the EV catalog?`)) {
-      deleteEV(carId);
-      onDatabaseUpdate?.();
-      setCarsList(getStoredEVs());
+      try {
+        await deleteEV(carId);
+        onDatabaseUpdate?.();
+      } catch (err) {
+        alert("Failed to delete the vehicle. Please check your internet connection.");
+      }
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !brand.trim() || !battery.trim() || !chargingTime.trim()) {
       alert("Please fill out the required fields (Name, Brand, Battery capacity, Charging time).");
@@ -212,12 +216,12 @@ export default function CarAdminView({ setCurrentPage, onDatabaseUpdate }: CarAd
     };
 
     try {
-      saveEV(newCar);
+      await saveEV(newCar);
       onDatabaseUpdate?.();
       setSuccessMessage(selectedId ? 'Vehicle specs updated successfully!' : 'New vehicle added to catalog!');
       setIsSuccess(true);
     } catch (err) {
-      alert("Failed to save changes! The local storage might be full (quota exceeded) due to large image files. Try linking a web URL for the picture instead of uploading a local file.");
+      alert("Failed to save changes! Please check your internet connection.");
     }
   };
 

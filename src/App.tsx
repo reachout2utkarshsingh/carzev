@@ -14,9 +14,10 @@ import TermsView from './components/TermsView';
 import BlogView from './components/BlogView';
 import BlogAdminView from './components/BlogAdminView';
 import CarAdminView from './components/CarAdminView';
-import { PageType, EVModel } from './types';
+import { PageType, EVModel, BlogPost } from './types';
 import { evModels, updateEvModels } from './data/evData';
 import { getAllEVs } from './lib/evService';
+import { getBlogPosts } from './lib/blogService';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function App() {
@@ -213,10 +214,21 @@ export default function App() {
   // Pre-populate Comparison Basket with default models from screenshots
   const [compareList, setCompareList] = useState<EVModel[]>([]);
   const [evList, setEvList] = useState<EVModel[]>(evModels);
+  const [blogList, setBlogList] = useState<BlogPost[]>([]);
 
   // City selection state persisted locally
   const [selectedCity, setSelectedCity] = useState<string>('New Delhi');
   const [loading, setLoading] = useState(true);
+
+  const loadBlogs = () => {
+    getBlogPosts()
+      .then((data) => {
+        setBlogList(data);
+      })
+      .catch((err) => {
+        console.error("Failed to load blog posts:", err);
+      });
+  };
 
   useEffect(() => {
     // Read city from storage
@@ -236,21 +248,25 @@ export default function App() {
       setCurrentPage('car-admin');
     }
 
-    // Fetch EVs from Firestore
-    getAllEVs()
-      .then((data) => {
-        if (data && data.length > 0) {
-          updateEvModels(data);
-          setEvList([...data]);
+    // Fetch EVs and Blogs concurrently from Firestore
+    Promise.all([
+      getAllEVs(),
+      getBlogPosts()
+    ])
+      .then(([evData, blogData]) => {
+        if (evData && evData.length > 0) {
+          updateEvModels(evData);
+          setEvList([...evData]);
+        }
+        if (blogData) {
+          setBlogList(blogData);
         }
       })
       .catch((err) => {
-        console.error("Failed to load EVs from Firestore, using static backup:", err);
+        console.error("Failed to load initial data from Firestore, using static backup:", err);
       })
       .finally(() => {
-        // Pre-populate comparison list from whichever data is current
         setCompareList([]);
-        
         setLoading(false);
       });
   }, []);
@@ -404,18 +420,21 @@ export default function App() {
       case 'blog':
         return (
           <BlogView
+            blogs={blogList}
             setCurrentPage={setCurrentPage}
           />
         );
       case 'blog-admin':
         return (
           <BlogAdminView
+            onDatabaseUpdate={loadBlogs}
             setCurrentPage={setCurrentPage}
           />
         );
       case 'car-admin':
         return (
           <CarAdminView
+            allEvs={evList}
             setCurrentPage={setCurrentPage}
             onDatabaseUpdate={() => {
               getAllEVs().then((data) => {
