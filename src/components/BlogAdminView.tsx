@@ -450,7 +450,7 @@ export default function BlogAdminView({ blogs, setCurrentPage, onDatabaseUpdate 
                   <div key={idx} className="bg-[#111317] p-4 rounded-xl border border-[#414750]/25 flex flex-col space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-[#8b919b]">
-                        {isCover ? 'Cover Image (Required)' : `Optional Image #${idx + 1}`}
+                        {isCover ? 'Cover Image (Optional)' : `Optional Image #${idx + 1}`}
                       </span>
                       {imageVal && (
                         <button
@@ -494,7 +494,6 @@ export default function BlogAdminView({ blogs, setCurrentPage, onDatabaseUpdate 
                         value={imageVal.startsWith('data:') ? '' : imageVal}
                         onChange={(e) => handleUrlChange(idx, e.target.value)}
                         className="w-full bg-[#1a1c20] text-[11px] font-medium text-white border border-[#414750]/30 rounded-lg px-2.5 py-2 focus:outline-none focus:border-[#9acbff] transition-all"
-                        required={isCover && imageType === 'url'}
                       />
                     ) : (
                       <div className="relative">
@@ -506,7 +505,6 @@ export default function BlogAdminView({ blogs, setCurrentPage, onDatabaseUpdate 
                             accept="image/*"
                             onChange={(e) => handleFileChange(idx, e)}
                             className="hidden"
-                            required={isCover && !imageVal}
                           />
                         </label>
                       </div>

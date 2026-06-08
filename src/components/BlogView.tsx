@@ -42,16 +42,141 @@ export default function BlogView({ blogs, setCurrentPage }: BlogViewProps) {
   };
 
   // 1. Detailed Article Reader View
+  // 1. Detailed Article Reader View
   if (selectedPost) {
-    // Separate first image as cover, remaining as body/gallery images
-    const coverImage = selectedPost.images[0] || 'https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=800';
-    const inlineImages = selectedPost.images.slice(1);
+    const coverImage = selectedPost.images && selectedPost.images.length > 0 ? selectedPost.images[0] : null;
+    const inlineImages = selectedPost.images ? selectedPost.images.slice(1) : [];
 
-    // Format paragraphs
-    const paragraphs = selectedPost.content
-      .split('\n\n')
-      .map(p => p.trim())
-      .filter(p => p.length > 0);
+    const parseMarkdown = (text: string): React.ReactNode[] => {
+      const lines = text.split('\n');
+      const elements: React.ReactNode[] = [];
+      let currentList: React.ReactNode[] = [];
+      let inList = false;
+
+      const flushList = (key: number) => {
+        if (currentList.length > 0) {
+          elements.push(
+            <ul key={`list-${key}`} className="list-disc pl-6 space-y-2 my-4 text-[#c0c7d1]">
+              {currentList}
+            </ul>
+          );
+          currentList = [];
+          inList = false;
+        }
+      };
+
+      const inlineParse = (lineText: string) => {
+        const parts = lineText.split('**');
+        return parts.map((part, index) => {
+          if (index % 2 === 1) {
+            return <strong key={index} className="text-white font-bold">{part}</strong>;
+          }
+          return part;
+        });
+      };
+
+      lines.forEach((line, index) => {
+        const trimmed = line.trim();
+
+        // Horizontal Rule
+        if (trimmed === '---') {
+          flushList(index);
+          elements.push(<hr key={index} className="border-[#414750]/30 my-8" />);
+          return;
+        }
+
+        // Headings
+        if (trimmed.startsWith('# ')) {
+          flushList(index);
+          elements.push(
+            <h1 key={index} className="text-3xl font-black text-white mt-8 mb-4 tracking-tight font-sans">
+              {inlineParse(trimmed.substring(2))}
+            </h1>
+          );
+          return;
+        }
+        if (trimmed.startsWith('## ')) {
+          flushList(index);
+          elements.push(
+            <h2 key={index} className="text-2xl font-extrabold text-white mt-8 mb-4 tracking-tight font-sans">
+              {inlineParse(trimmed.substring(3))}
+            </h2>
+          );
+          return;
+        }
+        if (trimmed.startsWith('### ')) {
+          flushList(index);
+          elements.push(
+            <h3 key={index} className="text-xl font-bold text-white mt-6 mb-3 tracking-tight font-sans">
+              {inlineParse(trimmed.substring(4))}
+            </h3>
+          );
+          return;
+        }
+
+        // Blockquotes
+        if (trimmed.startsWith('> ')) {
+          flushList(index);
+          elements.push(
+            <blockquote key={index} className="border-l-4 border-[#1b6ca8] pl-4 italic text-[#8b919b] bg-[#1a1c20]/45 p-4 rounded-r-xl my-6">
+              {inlineParse(trimmed.substring(2))}
+            </blockquote>
+          );
+          return;
+        }
+
+        // Bullet lists
+        if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
+          inList = true;
+          currentList.push(
+            <li key={`li-${index}`} className="leading-relaxed">
+              {inlineParse(trimmed.substring(2))}
+            </li>
+          );
+          return;
+        }
+
+        // Empty lines
+        if (trimmed === '') {
+          flushList(index);
+          return;
+        }
+
+        // Default paragraph
+        flushList(index);
+        elements.push(
+          <p key={index} className="leading-relaxed text-[#c0c7d1] mb-4">
+            {inlineParse(trimmed)}
+          </p>
+        );
+      });
+
+      flushList(lines.length);
+      return elements;
+    };
+
+    const parsedContent = parseMarkdown(selectedPost.content);
+    // Insert inline images in the middle of the article
+    const middleIndex = Math.floor(parsedContent.length / 2);
+    const elementsWithImages = [...parsedContent];
+    if (inlineImages.length > 0) {
+      elementsWithImages.splice(
+        middleIndex,
+        0,
+        <div key="inline-images-gallery" className={`grid ${inlineImages.length > 1 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1'} gap-6 my-10`}>
+          {inlineImages.map((imgUrl, imgIdx) => (
+            <div key={imgIdx} className="relative aspect-[3/2] rounded-xl overflow-hidden border border-[#414750]/30 bg-[#1a1c20] shadow-lg">
+              <img
+                src={imgUrl}
+                alt={`Article illust ${imgIdx + 1}`}
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          ))}
+        </div>
+      );
+    }
 
     return (
       <div className="bg-[#111317] min-h-screen pt-24 pb-16 text-[#e2e2e8]" id="blog-detail-view">
@@ -91,42 +216,20 @@ export default function BlogView({ blogs, setCurrentPage }: BlogViewProps) {
           </header>
 
           {/* Cover Banner */}
-          <div className="relative aspect-[21/9] rounded-2xl overflow-hidden mb-10 border border-[#414750]/30 shadow-2xl bg-[#1a1c20]">
-            <img
-              src={coverImage}
-              alt={selectedPost.title}
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
-          </div>
+          {coverImage && (
+            <div className="relative aspect-[21/9] rounded-2xl overflow-hidden mb-10 border border-[#414750]/30 shadow-2xl bg-[#1a1c20]">
+              <img
+                src={coverImage}
+                alt={selectedPost.title}
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          )}
 
           {/* Article Content Layout */}
           <div className="prose prose-invert max-w-none text-base sm:text-lg leading-relaxed text-[#c0c7d1] space-y-6">
-            {/* Render paragraphs, dynamically inserting inline images */}
-            {paragraphs.map((para, idx) => {
-              const showInlineImage = idx === Math.floor(paragraphs.length / 2) && inlineImages.length > 0;
-              return (
-                <React.Fragment key={idx}>
-                  <p className="whitespace-pre-wrap">{para}</p>
-                  
-                  {/* Inline images grid display */}
-                  {showInlineImage && (
-                    <div className={`grid ${inlineImages.length > 1 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1'} gap-6 my-10`}>
-                      {inlineImages.map((imgUrl, imgIdx) => (
-                        <div key={imgIdx} className="relative aspect-[3/2] rounded-xl overflow-hidden border border-[#414750]/30 bg-[#1a1c20] shadow-lg">
-                          <img
-                            src={imgUrl}
-                            alt={`Article illust ${imgIdx + 1}`}
-                            className="w-full h-full object-cover"
-                            referrerPolicy="no-referrer"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </React.Fragment>
-              );
-            })}
+            {elementsWithImages}
           </div>
 
           {/* Article Footer */}
