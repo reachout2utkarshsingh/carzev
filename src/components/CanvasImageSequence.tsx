@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { MotionValue } from 'motion/react';
 
 interface CanvasImageSequenceProps {
-  progress: number; // 0 to 1
+  progress: MotionValue<number>;
 }
 
 const TOTAL_FRAMES = 240;
@@ -14,10 +15,14 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
   const imagesRef = useRef<(HTMLImageElement | null)[]>(new Array(TOTAL_FRAMES).fill(null));
   const [firstLoaded, setFirstLoaded] = useState(false);
   
-  const progressRef = useRef(progress);
-  const targetIndexRef = useRef(0);
+  const progressRef = useRef(progress.get());
+  const targetIndexRef = useRef(Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.floor(progress.get() * TOTAL_FRAMES))));
   const loadingSetRef = useRef<Set<number>>(new Set());
   const pendingQueueRef = useRef<number[]>([]);
+  const lastDrawnIndexRef = useRef<number>(-1);
+
+  const lastDownloadCheckRef = useRef(0);
+  const throttleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const renderFrame = (p: number) => {
     if (!canvasRef.current) return;
@@ -29,6 +34,7 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
     
     // Find closest loaded image (search outwards from targetIndex)
     let imgToDraw = imagesRef.current[targetIndex];
+    let drawIndex = targetIndex;
     if (!imgToDraw || !imgToDraw.complete) {
       for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
         const prev = targetIndex - offset;
@@ -36,13 +42,20 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
         
         if (prev >= 0 && imagesRef.current[prev] && imagesRef.current[prev]!.complete) {
           imgToDraw = imagesRef.current[prev];
+          drawIndex = prev;
           break;
         }
         if (next < TOTAL_FRAMES && imagesRef.current[next] && imagesRef.current[next]!.complete) {
           imgToDraw = imagesRef.current[next];
+          drawIndex = next;
           break;
         }
       }
+    }
+    
+    // Skip drawing if the frame is identical to the last drawn frame
+    if (drawIndex === lastDrawnIndexRef.current) {
+      return;
     }
     
     if (imgToDraw && imgToDraw.complete) {
@@ -52,12 +65,18 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
       const imgWidth = imgToDraw.width;
       const imgHeight = imgToDraw.height;
 
-      const scale = Math.max(canvasWidth / imgWidth, canvasHeight / imgHeight);
+      const isPortrait = canvasWidth < canvasHeight;
+      // On portrait screens (mobile), scale to fit the width to prevent horizontal cropping of the car/explosion
+      const scale = isPortrait 
+        ? canvasWidth / imgWidth 
+        : Math.max(canvasWidth / imgWidth, canvasHeight / imgHeight);
       const x = (canvasWidth / 2) - (imgWidth / 2) * scale;
       const y = (canvasHeight / 2) - (imgHeight / 2) * scale;
 
       context.clearRect(0, 0, canvasWidth, canvasHeight);
       context.drawImage(imgToDraw, x, y, imgWidth * scale, imgHeight * scale);
+      
+      lastDrawnIndexRef.current = drawIndex;
     }
   };
 
@@ -78,12 +97,12 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
         requestAnimationFrame(() => renderFrame(progressRef.current));
       }
       
-      startNextDownloads();
+      throttledStartNextDownloads();
     };
     
     img.onerror = () => {
       loadingSetRef.current.delete(idx);
-      startNextDownloads();
+      throttledStartNextDownloads();
     };
   };
 
@@ -121,6 +140,22 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
     }
   };
 
+  const throttledStartNextDownloads = () => {
+    const now = Date.now();
+    const LIMIT = 150; // ms
+    
+    if (now - lastDownloadCheckRef.current >= LIMIT) {
+      lastDownloadCheckRef.current = now;
+      startNextDownloads();
+    } else {
+      if (throttleTimeoutRef.current) clearTimeout(throttleTimeoutRef.current);
+      throttleTimeoutRef.current = setTimeout(() => {
+        lastDownloadCheckRef.current = Date.now();
+        startNextDownloads();
+      }, LIMIT);
+    }
+  };
+
   // Preload first frame immediately, queue the rest when it's done
   useEffect(() => {
     const firstImg = new Image();
@@ -136,7 +171,7 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
         queue.push(i);
       }
       pendingQueueRef.current = queue;
-      startNextDownloads();
+      throttledStartNextDownloads();
     };
     firstImg.onerror = () => {
       console.error("Failed to load first frame");
@@ -146,17 +181,27 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
         queue.push(i);
       }
       pendingQueueRef.current = queue;
-      startNextDownloads();
+      throttledStartNextDownloads();
+    };
+    
+    return () => {
+      if (throttleTimeoutRef.current) clearTimeout(throttleTimeoutRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Update refs and trigger prioritized downloads when scroll progress changes
   useEffect(() => {
-    progressRef.current = progress;
-    targetIndexRef.current = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.floor(progress * TOTAL_FRAMES)));
-    requestAnimationFrame(() => renderFrame(progress));
-    startNextDownloads();
+    const unsubscribe = progress.onChange((latest) => {
+      progressRef.current = latest;
+      targetIndexRef.current = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.floor(latest * TOTAL_FRAMES)));
+      requestAnimationFrame(() => renderFrame(latest));
+      throttledStartNextDownloads();
+    });
+    
+    return () => {
+      unsubscribe();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [progress]);
 
@@ -166,6 +211,7 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
       if (canvasRef.current) {
         canvasRef.current.width = window.innerWidth;
         canvasRef.current.height = window.innerHeight;
+        lastDrawnIndexRef.current = -1; // Force redraw
         requestAnimationFrame(() => renderFrame(progressRef.current));
       }
     };

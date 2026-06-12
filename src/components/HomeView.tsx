@@ -68,13 +68,7 @@ export default function HomeView({
     restDelta: 0.001
   });
 
-  const [progress, setProgress] = useState(0);
 
-  useEffect(() => {
-    return smoothProgress.onChange((latest) => {
-      setProgress(latest);
-    });
-  }, [smoothProgress]);
 
   // Sync local search state with global state if changed
   useEffect(() => {
@@ -130,7 +124,7 @@ export default function HomeView({
       
       {/* Fixed Background Canvas */}
       <div className="fixed inset-0 z-0 h-screen w-full bg-black">
-        <CanvasImageSequence progress={progress} />
+        <CanvasImageSequence progress={smoothProgress} />
       </div>
       
       {/* Foreground Content wrapper */}
