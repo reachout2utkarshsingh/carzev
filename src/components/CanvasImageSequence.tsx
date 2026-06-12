@@ -6,6 +6,8 @@ interface CanvasImageSequenceProps {
 }
 
 const TOTAL_FRAMES = 240;
+const IMG_WIDTH = 1903;
+const IMG_HEIGHT = 987;
 
 const currentFrame = (index: number) =>
   `/images/ezgif-frame-${index.toString().padStart(3, '0')}.webp`;
@@ -60,22 +62,8 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
     
     if (imgToDraw && imgToDraw.complete) {
       const canvas = canvasRef.current;
-      const canvasWidth = canvas.width;
-      const canvasHeight = canvas.height;
-      const imgWidth = imgToDraw.width;
-      const imgHeight = imgToDraw.height;
-
-      const isPortrait = canvasWidth < canvasHeight;
-      // On portrait screens (mobile), scale to fit the width to prevent horizontal cropping of the car/explosion
-      const scale = isPortrait 
-        ? canvasWidth / imgWidth 
-        : Math.max(canvasWidth / imgWidth, canvasHeight / imgHeight);
-      const x = (canvasWidth / 2) - (imgWidth / 2) * scale;
-      const y = (canvasHeight / 2) - (imgHeight / 2) * scale;
-
-      context.clearRect(0, 0, canvasWidth, canvasHeight);
-      context.drawImage(imgToDraw, x, y, imgWidth * scale, imgHeight * scale);
-      
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(imgToDraw, 0, 0, canvas.width, canvas.height);
       lastDrawnIndexRef.current = drawIndex;
     }
   };
@@ -158,6 +146,12 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
 
   // Preload first frame immediately, queue the rest when it's done
   useEffect(() => {
+    // Set fixed internal dimensions matching image source size
+    if (canvasRef.current) {
+      canvasRef.current.width = IMG_WIDTH;
+      canvasRef.current.height = IMG_HEIGHT;
+    }
+
     const firstImg = new Image();
     firstImg.src = currentFrame(1);
     firstImg.onload = () => {
@@ -205,25 +199,12 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [progress]);
 
-  // Set canvas size and render on resize
-  useEffect(() => {
-    const updateSize = () => {
-      if (canvasRef.current) {
-        canvasRef.current.width = window.innerWidth;
-        canvasRef.current.height = window.innerHeight;
-        lastDrawnIndexRef.current = -1; // Force redraw
-        requestAnimationFrame(() => renderFrame(progressRef.current));
-      }
-    };
-    window.addEventListener('resize', updateSize);
-    updateSize(); // Initial setup
-    return () => window.removeEventListener('resize', updateSize);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
-    <div className="fixed inset-0 w-full h-full z-0 bg-[#0a0a0a] pointer-events-none">
-      <canvas ref={canvasRef} className="w-full h-full" />
+    <div className="fixed inset-0 w-full h-full z-0 bg-[#0a0a0a] pointer-events-none flex items-center justify-center">
+      <canvas 
+        ref={canvasRef} 
+        className="w-full h-full object-contain md:object-cover" 
+      />
       {!firstLoaded && (
         <div className="absolute inset-0 flex items-center justify-center bg-[#0a0a0a] z-10">
           <div className="text-white text-sm uppercase tracking-widest flex flex-col items-center">
