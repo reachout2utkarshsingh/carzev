@@ -20,9 +20,74 @@ import { getAllEVs } from './lib/evService';
 import { getBlogPosts } from './lib/blogService';
 import { motion, AnimatePresence } from 'motion/react';
 
+const parseLocation = (): { page: PageType; selectedEVId: string } => {
+  const path = window.location.pathname.replace(/^\//, '').toLowerCase();
+  const searchParams = new URLSearchParams(window.location.search);
+  
+  if (path === '' || path === 'home') {
+    return { page: 'home', selectedEVId: 'nexon-ev' };
+  }
+  if (path === 'listings') {
+    return { page: 'listings', selectedEVId: 'nexon-ev' };
+  }
+  if (path === 'compare') {
+    return { page: 'compare', selectedEVId: 'nexon-ev' };
+  }
+  if (path === 'savings-calc' || path === 'savings') {
+    return { page: 'savings-calc', selectedEVId: 'nexon-ev' };
+  }
+  if (path === 'emi-calc' || path === 'emi') {
+    return { page: 'emi-calc', selectedEVId: 'nexon-ev' };
+  }
+  if (path === 'consultation') {
+    return { page: 'consultation', selectedEVId: 'nexon-ev' };
+  }
+  if (path === 'privacy') {
+    return { page: 'privacy', selectedEVId: 'nexon-ev' };
+  }
+  if (path === 'terms') {
+    return { page: 'terms', selectedEVId: 'nexon-ev' };
+  }
+  if (path === 'blog') {
+    return { page: 'blog', selectedEVId: 'nexon-ev' };
+  }
+  if (path === 'blog-admin') {
+    return { page: 'blog-admin', selectedEVId: 'nexon-ev' };
+  }
+  if (path === 'car-admin') {
+    return { page: 'car-admin', selectedEVId: 'nexon-ev' };
+  }
+
+  // Check if the path matches any EV (either directly by ID, or by stripping non-alphanumeric chars)
+  const cleanPath = path.replace(/[^a-z0-9]/g, '');
+  const matchedEV = evModels.find(
+    (ev) => 
+      ev.id.toLowerCase() === path || 
+      ev.id.replace(/[^a-z0-9]/g, '') === cleanPath ||
+      (ev.brand + ev.name).toLowerCase().replace(/[^a-z0-9]/g, '') === cleanPath
+  );
+
+  if (matchedEV) {
+    return { page: 'detail', selectedEVId: matchedEV.id };
+  }
+
+  // Fallback to query parameter (backward compatibility)
+  const pageParam = searchParams.get('page');
+  const idParam = searchParams.get('id');
+  if (pageParam) {
+    return { 
+      page: pageParam as PageType, 
+      selectedEVId: idParam || 'nexon-ev' 
+    };
+  }
+
+  return { page: 'home', selectedEVId: 'nexon-ev' };
+};
+
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<PageType>('home');
-  const [selectedEVId, setSelectedEVId] = useState<string>('nexon-ev');
+  const initialLoc = parseLocation();
+  const [currentPage, setCurrentPage] = useState<PageType>(initialLoc.page);
+  const [selectedEVId, setSelectedEVId] = useState<string>(initialLoc.selectedEVId);
 
   // Scroll to top on page navigation
   useEffect(() => {
@@ -237,16 +302,10 @@ export default function App() {
       setSelectedCity(saved);
     }
 
-    // Check query parameters for blog or blog-admin routing
-    const params = new URLSearchParams(window.location.search);
-    const pageParam = params.get('page');
-    if (pageParam === 'blog-admin') {
-      setCurrentPage('blog-admin');
-    } else if (pageParam === 'blog') {
-      setCurrentPage('blog');
-    } else if (pageParam === 'car-admin') {
-      setCurrentPage('car-admin');
-    }
+    // Initialize current page based on pathname/search params
+    const loc = parseLocation();
+    setCurrentPage(loc.page);
+    setSelectedEVId(loc.selectedEVId);
 
     // Fetch EVs and Blogs concurrently from Firestore
     Promise.all([
@@ -257,6 +316,11 @@ export default function App() {
         if (evData && evData.length > 0) {
           updateEvModels(evData);
           setEvList([...evData]);
+          
+          // Re-evaluate location after dynamic EV models load
+          const freshLoc = parseLocation();
+          setCurrentPage(freshLoc.page);
+          setSelectedEVId(freshLoc.selectedEVId);
         }
         if (blogData) {
           setBlogList(blogData);
@@ -271,6 +335,17 @@ export default function App() {
       });
   }, []);
 
+  useEffect(() => {
+    const handlePopState = () => {
+      const loc = parseLocation();
+      setCurrentPage(loc.page);
+      setSelectedEVId(loc.selectedEVId);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-[#111317] text-white">
@@ -281,9 +356,25 @@ export default function App() {
   }
 
 
+  const handleSetCurrentPage = (page: PageType) => {
+    let url = `/${page}`;
+    if (page === 'home') url = '/';
+    if (page === 'detail') url = `/${selectedEVId}`;
+    
+    setCurrentPage(page);
+    if (window.location.pathname !== url) {
+      window.history.pushState(null, '', url);
+    }
+  };
+
   const handleSelectEV = (evId: string) => {
     setSelectedEVId(evId);
     setCurrentPage('detail');
+    
+    const url = `/${evId}`;
+    if (window.location.pathname !== url) {
+      window.history.pushState(null, '', url);
+    }
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
@@ -325,7 +416,7 @@ export default function App() {
       case 'home':
         return (
           <HomeView
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleSetCurrentPage}
             setSelectedCategory={setSelectedCategory}
             onSelectEV={handleSelectEV}
             setFilterBudget={setFilterBudget}
@@ -341,7 +432,7 @@ export default function App() {
       case 'listings':
         return (
           <CategoryView
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleSetCurrentPage}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
             onSelectEV={handleSelectEV}
@@ -362,7 +453,7 @@ export default function App() {
         return (
           <DetailView
             evId={selectedEVId}
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleSetCurrentPage}
             onAddToCompare={handleAddToCompare}
             compareList={compareList}
             allEvs={evList}
@@ -376,14 +467,14 @@ export default function App() {
             onRemoveFromCompare={handleRemoveFromCompare}
             onAddFromCompareDropdown={handleAddFromCompareDropdown}
             allEvs={evList}
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleSetCurrentPage}
             onSelectEV={handleSelectEV}
           />
         );
       case 'savings-calc':
         return (
           <SavingsView
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleSetCurrentPage}
             onSelectEV={handleSelectEV}
             selectedCity={selectedCity}
             allEvs={evList}
@@ -392,7 +483,7 @@ export default function App() {
       case 'emi-calc':
         return (
           <EMIView
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleSetCurrentPage}
             onSelectEV={handleSelectEV}
             selectedCity={selectedCity}
             allEvs={evList}
@@ -401,27 +492,27 @@ export default function App() {
       case 'consultation':
         return (
           <ConsultationView
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleSetCurrentPage}
             selectedCity={selectedCity}
           />
         );
       case 'privacy':
         return (
           <PrivacyView
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleSetCurrentPage}
           />
         );
       case 'terms':
         return (
           <TermsView
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleSetCurrentPage}
           />
         );
       case 'blog':
         return (
           <BlogView
             blogs={blogList}
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleSetCurrentPage}
           />
         );
       case 'blog-admin':
@@ -429,14 +520,14 @@ export default function App() {
           <BlogAdminView
             blogs={blogList}
             onDatabaseUpdate={loadBlogs}
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleSetCurrentPage}
           />
         );
       case 'car-admin':
         return (
           <CarAdminView
             allEvs={evList}
-            setCurrentPage={setCurrentPage}
+            setCurrentPage={handleSetCurrentPage}
             onDatabaseUpdate={() => {
               getAllEVs().then((data) => {
                 if (data && data.length > 0) {
@@ -456,7 +547,7 @@ export default function App() {
       {/* Navbar segment */}
       <Navbar
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
+        setCurrentPage={handleSetCurrentPage}
         setSelectedCategory={setSelectedCategory}
         onSelectEV={handleSelectEV}
         selectedCity={selectedCity}
@@ -487,7 +578,7 @@ export default function App() {
           <div className="animate-bounce pointer-events-auto">
             <button 
               onClick={() => {
-                setCurrentPage('compare');
+                handleSetCurrentPage('compare');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               className="bg-[#00C896] text-[#002116] px-6 py-3 rounded-full font-bold shadow-2xl flex items-center gap-2 border border-[#00e3aa] hover:scale-105 transition-transform whitespace-nowrap"
@@ -501,7 +592,7 @@ export default function App() {
 
       {/* Footer segment */}
       <Footer 
-        setCurrentPage={setCurrentPage}
+        setCurrentPage={handleSetCurrentPage}
         setSelectedCategory={setSelectedCategory}
       />
     </div>
