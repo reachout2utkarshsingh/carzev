@@ -68,30 +68,20 @@ export default function Footer({ setCurrentPage, setSelectedCategory }: FooterPr
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 font-sans">Company</h4>
             <ul className="space-y-2 text-sm text-[#8b919b]">
               <li>
-                <span 
-                  onClick={() => handleNavClick('listings', 'cars')} 
-                  className="cursor-pointer hover:text-white transition-colors"
+                <a 
+                  href="/listings"
+                  className="hover:text-white transition-colors"
                 >
                   Electric Cars
-                </span>
+                </a>
               </li>
-              {/*
               <li>
-                <span 
-                  onClick={() => handleNavClick('listings', 'two-wheelers')} 
-                  className="cursor-pointer hover:text-white transition-colors"
-                >
-                  Electric Scooters & Bikes
-                </span>
-              </li>
-              */}
-              <li>
-                <span 
-                  onClick={() => handleNavClick('compare')} 
-                  className="cursor-pointer hover:text-white transition-colors"
+                <a 
+                  href="/compare"
+                  className="hover:text-white transition-colors"
                 >
                   Compare Hub
-                </span>
+                </a>
               </li>
             </ul>
           </div>
@@ -101,20 +91,20 @@ export default function Footer({ setCurrentPage, setSelectedCategory }: FooterPr
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 font-sans">Legal</h4>
             <ul className="space-y-2 text-sm text-[#8b919b]">
               <li>
-                <span 
-                  onClick={() => handleNavClick('privacy')}
-                  className="hover:text-white transition-colors cursor-pointer"
+                <a 
+                  href="/privacy"
+                  className="hover:text-white transition-colors"
                 >
                   Privacy Policy
-                </span>
+                </a>
               </li>
               <li>
-                <span 
-                  onClick={() => handleNavClick('terms')}
-                  className="hover:text-white transition-colors cursor-pointer"
+                <a 
+                  href="/terms"
+                  className="hover:text-white transition-colors"
                 >
                   Terms and Conditions
-                </span>
+                </a>
               </li>
             </ul>
           </div>

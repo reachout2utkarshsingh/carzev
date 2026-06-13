@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Search, Zap, BatteryCharging, Shield, PenTool, Award, Sparkles } from 'lucide-react';
 import { PageType, EVModel } from '../types';
 import { evModels } from '../data/evData';
+import { getBrandSlug } from '../utils/seoHelper';
 import CanvasImageSequence from './CanvasImageSequence';
 import { motion, useScroll, useSpring } from 'motion/react';
 
@@ -244,7 +245,7 @@ export default function HomeView({
               const isAdded = compareList.some(item => item.id === ev.id);
               return (
                 <motion.a 
-                  href={`/${ev.id.replace(/[^a-z0-9]/g, '')}`}
+                  href={`/ev/${getBrandSlug(ev.brand)}/${ev.id}`}
                   variants={itemVariants}
                   key={ev.id} 
                   className="bg-black/60 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden hover:border-[#00C896]/50 hover:shadow-[0_0_30px_rgba(0,200,150,0.15)] transition-all duration-300 flex flex-col group cursor-pointer block"

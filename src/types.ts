@@ -29,7 +29,7 @@ export interface EVModel {
   variants?: { variantName: string; price: number }[];
 }
 
-export type PageType = 'home' | 'listings' | 'detail' | 'compare' | 'savings-calc' | 'emi-calc' | 'consultation' | 'privacy' | 'terms' | 'blog' | 'blog-admin' | 'car-admin';
+export type PageType = 'home' | 'listings' | 'detail' | 'compare' | 'savings-calc' | 'emi-calc' | 'consultation' | 'privacy' | 'terms' | 'blog' | 'blog-admin' | 'car-admin' | 'buying-guide' | 'calculator-landing';
 
 export interface BlogPost {
   id: string;

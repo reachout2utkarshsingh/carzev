@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Plus, X, Sparkles, SlidersHorizontal, ArrowLeftRight, Check, Compass, Zap } from 'lucide-react';
 import { EVModel, PageType } from '../types';
+import { getBrandSlug } from '../utils/seoHelper';
 
 interface CompareViewProps {
   compareList: EVModel[];
@@ -213,17 +214,29 @@ export default function CompareView({
 
                     <div>
                       <span className="text-[10px] text-[#8b919b] tracking-wider uppercase font-mono">{ev.brand}</span>
-                      <h3 className="text-base font-bold text-white leading-tight mt-0.5 truncate pr-6 group-hover:text-[#9acbff]">{ev.name}</h3>
+                      <a 
+                        href={`/ev/${getBrandSlug(ev.brand)}/${ev.id}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          onSelectEV(ev.id);
+                        }}
+                      >
+                        <h3 className="text-base font-bold text-white leading-tight mt-0.5 truncate pr-6 group-hover:text-[#9acbff]">{ev.name}</h3>
+                      </a>
                       <p className="text-xs text-[#00C896] font-bold mt-1.5">{ev.range} km range</p>
                     </div>
 
                     <div className="flex gap-2 pt-4">
-                      <button 
-                        onClick={() => onSelectEV(ev.id)}
-                        className="w-full py-1.5 bg-[#111317] hover:bg-[#282a2e] text-[11px] font-bold text-[#c0c7d1] rounded-lg transition-all text-center"
+                      <a 
+                        href={`/ev/${getBrandSlug(ev.brand)}/${ev.id}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          onSelectEV(ev.id);
+                        }}
+                        className="w-full py-1.5 bg-[#111317] hover:bg-[#282a2e] text-[11px] font-bold text-[#c0c7d1] rounded-lg transition-all text-center block"
                       >
                         View Specs
-                      </button>
+                      </a>
                     </div>
 
                   </div>

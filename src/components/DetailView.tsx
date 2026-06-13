@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Star, Battery, Gauge, Zap, Calendar, Heart, Share2, ClipboardList, ThumbsUp, ThumbsDown, User, Phone, Mail, CheckCircle, ShieldAlert, Calculator, Coins } from 'lucide-react';
 import { EVModel, PageType } from '../types';
 import { addTestDriveRequest } from '../lib/evService';
+import { getBrandSlug } from '../utils/seoHelper';
 
 interface DetailViewProps {
   evId: string;
@@ -265,7 +266,7 @@ export default function DetailView({
                 {ev.category}
               </span>
               <h1 className="text-3xl sm:text-4xl font-extrabold text-white mt-3 tracking-tight font-sans">
-                {ev.name}
+                {ev.brand} {ev.name} Electric Price & Specs
               </h1>
               <p className="text-sm text-[#8b919b] mt-1 font-mono">{ev.brand}</p>
             </div>
@@ -834,6 +835,144 @@ export default function DetailView({
             </div>
           </div>
         )}
+
+        {/* Dynamic FAQs Section */}
+        <div className="mt-12 border-t border-[#414750]/20 pt-12">
+          <h3 className="text-xl font-bold text-white font-sans flex items-center gap-2 mb-6">
+            <Star className="w-5 h-5 text-[#00C896]" />
+            {ev.brand} {ev.name} Frequently Asked Questions
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6" id="faq-accordion">
+            <div className="bg-[#1a1c20] p-6 rounded-2xl border border-[#414750]/25 space-y-2">
+              <h4 className="text-sm font-bold text-white">What is the ex-showroom price of {ev.brand} {ev.name} in India?</h4>
+              <p className="text-xs text-[#8b919b] leading-relaxed">
+                The ex-showroom price range for the {ev.brand} {ev.name} starts at ₹{ev.priceMin} Lakh and goes up to ₹{ev.priceMax || ev.priceMin} Lakh. Local road taxes (RTO) and insurance differ depending on your selected state and city.
+              </p>
+            </div>
+            <div className="bg-[#1a1c20] p-6 rounded-2xl border border-[#414750]/25 space-y-2">
+              <h4 className="text-sm font-bold text-white">What is the certified driving range of {ev.brand} {ev.name}?</h4>
+              <p className="text-xs text-[#8b919b] leading-relaxed">
+                The {ev.brand} {ev.name} has a certified driving range of {ev.range} km ({ev.rangeType}) on a full battery charge. Real-world range typically decreases by 15-20% depending on driving speeds and AC configurations.
+              </p>
+            </div>
+            <div className="bg-[#1a1c20] p-6 rounded-2xl border border-[#414750]/25 space-y-2">
+              <h4 className="text-sm font-bold text-white">How long does it take to charge {ev.brand} {ev.name}?</h4>
+              <p className="text-xs text-[#8b919b] leading-relaxed">
+                Recharging the LFP/NMC {ev.battery} battery pack takes about {ev.chargingTime}. Using a standard home AC wallbox ({ev.chargingAC || '7.2 kW'}), full charging can be completed overnight in 6 to 9 hours.
+              </p>
+            </div>
+            <div className="bg-[#1a1c20] p-6 rounded-2xl border border-[#414750]/25 space-y-2">
+              <h4 className="text-sm font-bold text-white">What is the battery warranty offered on the {ev.brand} {ev.name}?</h4>
+              <p className="text-xs text-[#8b919b] leading-relaxed">
+                Manufacturers in India offer a standard structural warranty of 8 years or 1,60,000 km (whichever is earlier) on LFP battery packs and electrical traction motors.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Contextual Internal Linking Engine */}
+        <div className="mt-12 bg-[#1a1c20] border border-[#414750]/30 rounded-2xl p-6 sm:p-8">
+          <h3 className="text-lg font-bold text-white font-sans border-b border-[#414750]/25 pb-3 mb-4 flex items-center gap-2">
+            <ClipboardList className="w-5 h-5 text-[#9acbff]" />
+            EV Buyer Resources & Similar Recommendations
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            {/* Similar Vehicles */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold text-[#8b919b] uppercase tracking-wider font-mono">Similar Vehicles</h4>
+              <ul className="space-y-2 text-xs">
+                {allEvs
+                  .filter(item => item.id !== ev.id && item.category === ev.category)
+                  .map(item => ({ item, diff: Math.abs(item.priceMin - ev.priceMin) }))
+                  .sort((a, b) => a.diff - b.diff)
+                  .slice(0, 3)
+                  .map(({ item }) => (
+                    <li key={item.id}>
+                      <a 
+                        href={`/ev/${getBrandSlug(item.brand)}/${item.id}`}
+                        className="text-[#9acbff] hover:underline font-bold"
+                      >
+                        {item.brand} {item.name} (₹{item.priceMin}L) &rarr;
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+            
+            {/* Comparisons */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold text-[#8b919b] uppercase tracking-wider font-mono">Compare Side-by-Side</h4>
+              <ul className="space-y-2 text-xs">
+                {allEvs
+                  .filter(item => item.id !== ev.id && item.category === ev.category)
+                  .map(item => ({ item, diff: Math.abs(item.priceMin - ev.priceMin) }))
+                  .sort((a, b) => a.diff - b.diff)
+                  .slice(0, 2)
+                  .map(({ item }) => (
+                    <li key={item.id}>
+                      <a 
+                        href={`/compare/${ev.id}-vs-${item.id}`}
+                        className="text-[#00C896] hover:underline font-bold"
+                      >
+                        {ev.name} vs {item.name} Comparison &rarr;
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+
+            {/* Tools & Calculators */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold text-[#8b919b] uppercase tracking-wider font-mono">EV Interactive Tools</h4>
+              <ul className="space-y-2 text-xs">
+                <li>
+                  <a href={`/running-cost/${ev.id}`} className="text-[#ffb86f] hover:underline font-bold">
+                    {ev.name} Running Cost Calculator &rarr;
+                  </a>
+                </li>
+                <li>
+                  <a href={`/charging-cost/${ev.id}`} className="text-[#ffb86f] hover:underline font-bold">
+                    {ev.name} Charging Cost Estimator &rarr;
+                  </a>
+                </li>
+                <li>
+                  <a href={`/range-calculator/${ev.id}`} className="text-[#ffb86f] hover:underline font-bold">
+                    {ev.name} Real-World Range Estimator &rarr;
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          {/* Relevant Buying Guides */}
+          <div className="mt-6 border-t border-[#414750]/20 pt-4 flex gap-4 flex-wrap text-xs font-mono">
+            <span className="text-[#8b919b]">Segment Guides:</span>
+            {ev.priceMin <= 10 && (
+              <a href="/best-evs-under-10-lakh" className="text-[#9acbff] hover:underline font-semibold">
+                [Budget EVs Under 10L]
+              </a>
+            )}
+            {ev.priceMin <= 15 && (
+              <a href="/best-evs-under-15-lakh" className="text-[#9acbff] hover:underline font-semibold">
+                [Electric SUVs Under 15L]
+              </a>
+            )}
+            {ev.seatingCapacity >= 5 && (
+              <a href="/best-family-evs-india" className="text-[#9acbff] hover:underline font-semibold">
+                [Best Family EVs]
+              </a>
+            )}
+            {ev.range >= 450 && (
+              <a href="/best-long-range-evs" className="text-[#9acbff] hover:underline font-semibold">
+                [Long Range EV Lists]
+              </a>
+            )}
+          </div>
+        </div>
 
       </div>
 

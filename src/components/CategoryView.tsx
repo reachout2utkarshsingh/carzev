@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { SlidersHorizontal, BatteryCharging, Star, Shield, ArrowUpDown, ChevronDown, Check } from 'lucide-react';
 import { EVModel, PageType } from '../types';
 import { evModels } from '../data/evData';
+import { getBrandSlug } from '../utils/seoHelper';
 
 interface CategoryViewProps {
   setCurrentPage: (page: PageType) => void;
@@ -327,7 +328,7 @@ export default function CategoryView({
                   const isAdded = compareList.some(item => item.id === ev.id);
                   return (
                     <a 
-                      href={`/${ev.id.replace(/[^a-z0-9]/g, '')}`}
+                      href={`/ev/${getBrandSlug(ev.brand)}/${ev.id}`}
                       key={ev.id} 
                       className="bg-[#1a1c20] rounded-2xl border border-[#414750]/30 overflow-hidden hover:border-[#9acbff]/50 hover:shadow-2xl transition-all duration-300 flex flex-col group cursor-pointer block"
                     >
