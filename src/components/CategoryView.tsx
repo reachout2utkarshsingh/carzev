@@ -326,10 +326,10 @@ export default function CategoryView({
                 {filteredEVs.map((ev) => {
                   const isAdded = compareList.some(item => item.id === ev.id);
                   return (
-                    <div 
+                    <a 
+                      href={`/${ev.id.replace(/[^a-z0-9]/g, '')}`}
                       key={ev.id} 
-                      className="bg-[#1a1c20] rounded-2xl border border-[#414750]/30 overflow-hidden hover:border-[#9acbff]/50 hover:shadow-2xl transition-all duration-300 flex flex-col group cursor-pointer"
-                      onClick={() => onSelectEV(ev.id)}
+                      className="bg-[#1a1c20] rounded-2xl border border-[#414750]/30 overflow-hidden hover:border-[#9acbff]/50 hover:shadow-2xl transition-all duration-300 flex flex-col group cursor-pointer block"
                     >
                       {/* Image Area */}
                       <div className="relative aspect-video overflow-hidden bg-[#111317]">
@@ -378,7 +378,7 @@ export default function CategoryView({
                         <div className="mt-auto pt-6 flex justify-between items-center border-t border-[#414750]/20 gap-2">
                           <button 
                             onClick={(e) => {
-                              e.stopPropagation();
+                              e.preventDefault();
                               onAddToCompare(ev);
                             }}
                             className={`flex-1 text-xs font-bold transition-all py-2 rounded-xl border ${
@@ -389,20 +389,16 @@ export default function CategoryView({
                           >
                             {isAdded ? 'Added' : 'Compare'}
                           </button>
-                          <button 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onSelectEV(ev.id);
-                            }}
-                            className="flex-1 bg-[#1b6ca8] text-white py-2 font-bold text-xs rounded-xl hover:bg-[#114f7d] transition-all text-center"
+                          <span 
+                            className="flex-1 bg-[#1b6ca8] text-white py-2 font-bold text-xs rounded-xl hover:bg-[#114f7d] transition-all text-center block"
                           >
                             View Details
-                          </button>
+                          </span>
                         </div>
 
                       </div>
 
-                    </div>
+                    </a>
                   );
                 })}
               </div>

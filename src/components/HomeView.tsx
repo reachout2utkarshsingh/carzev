@@ -243,11 +243,11 @@ export default function HomeView({
             {popularEVs.map((ev) => {
               const isAdded = compareList.some(item => item.id === ev.id);
               return (
-                <motion.div 
+                <motion.a 
+                  href={`/${ev.id.replace(/[^a-z0-9]/g, '')}`}
                   variants={itemVariants}
                   key={ev.id} 
-                  className="bg-black/60 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden hover:border-[#00C896]/50 hover:shadow-[0_0_30px_rgba(0,200,150,0.15)] transition-all duration-300 flex flex-col group cursor-pointer"
-                  onClick={() => onSelectEV(ev.id)}
+                  className="bg-black/60 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden hover:border-[#00C896]/50 hover:shadow-[0_0_30px_rgba(0,200,150,0.15)] transition-all duration-300 flex flex-col group cursor-pointer block"
                 >
                   
                   {/* Card header image layer */}
@@ -292,7 +292,7 @@ export default function HomeView({
                     <div className="mt-auto pt-6 flex justify-between items-center border-t border-white/10">
                       <button 
                         onClick={(e) => {
-                          e.stopPropagation();
+                          e.preventDefault();
                           onAddToCompare(ev);
                         }}
                         className={`text-xs font-bold transition-all px-3 py-1.5 rounded-lg border ${
@@ -303,20 +303,14 @@ export default function HomeView({
                       >
                         {isAdded ? 'Added' : 'Compare'}
                       </button>
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onSelectEV(ev.id);
-                        }}
-                        className="bg-white/10 text-white border border-white/20 px-4 py-2 font-bold text-xs rounded-xl hover:bg-[#00C896] hover:text-black hover:border-[#00C896] transition-all"
-                      >
+                      <span className="bg-white/10 text-white border border-white/20 px-4 py-2 font-bold text-xs rounded-xl group-hover:bg-[#00C896] group-hover:text-black group-hover:border-[#00C896] transition-all">
                         View Details
-                      </button>
+                      </span>
                     </div>
 
                   </div>
 
-                </motion.div>
+                </motion.a>
               );
             })}
           </motion.div>

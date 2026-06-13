@@ -203,7 +203,7 @@ export default function CanvasImageSequence({ progress }: CanvasImageSequencePro
     <div className="fixed inset-0 w-full h-full z-0 bg-[#0a0a0a] pointer-events-none flex items-center justify-center">
       <canvas 
         ref={canvasRef} 
-        className="w-full h-full object-contain md:object-cover" 
+        className="w-full h-full object-cover object-center" 
       />
       {!firstLoaded && (
         <div className="absolute inset-0 flex items-center justify-center bg-[#0a0a0a] z-10">

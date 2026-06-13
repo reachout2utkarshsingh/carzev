@@ -807,6 +807,34 @@ export default function DetailView({
 
         </div>
 
+        {/* Variants & Pricing Table */}
+        {ev.variants && ev.variants.length > 0 && (
+          <div className="mt-12 bg-[#1a1c20] border border-[#414750]/30 rounded-2xl p-6 sm:p-8">
+            <h3 className="text-lg font-extrabold text-white font-sans flex items-center gap-2 border-b border-[#414750]/25 pb-3 mb-4">
+              <ClipboardList className="w-5 h-5 text-[#9acbff]" />
+              Variants & Pricing (Ex-Showroom)
+            </h3>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm text-[#e2e2e8]">
+                <thead className="bg-[#111317] border-b border-[#414750]/30 font-mono text-xs text-[#8b919b] uppercase tracking-wider">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">Variant Name</th>
+                    <th className="px-4 py-3 font-medium text-right">Price (Lakhs)</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#414750]/20 font-sans">
+                  {ev.variants.map((variant, idx) => (
+                    <tr key={idx} className="hover:bg-[#111317]/50 transition-colors">
+                      <td className="px-4 py-3 font-semibold">{variant.variantName}</td>
+                      <td className="px-4 py-3 text-right text-[#00C896] font-bold">₹{variant.price} L</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
       </div>
 
       {/* Booking Form Dialog Drawer component Modal */}

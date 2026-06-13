@@ -26,6 +26,7 @@ export interface EVModel {
   pros: string[];
   cons: string[];
   description: string;
+  variants?: { variantName: string; price: number }[];
 }
 
 export type PageType = 'home' | 'listings' | 'detail' | 'compare' | 'savings-calc' | 'emi-calc' | 'consultation' | 'privacy' | 'terms' | 'blog' | 'blog-admin' | 'car-admin';

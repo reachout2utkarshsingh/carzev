@@ -86,62 +86,62 @@ export default function Navbar({
             </div>
             
             <div className="hidden md:flex gap-6 items-center">
-              <span
-                onClick={() => handleNavClick('listings', 'cars')}
+              <a
+                href="/listings"
                 className={`cursor-pointer text-sm font-semibold tracking-wide transition-colors ${
                   currentPage === 'listings' && searchQuery === '' ? 'text-[#9acbff]' : 'text-[#c0c7d1] hover:text-[#9acbff]'
                 }`}
                 id="link-cars"
               >
                 Electric Cars
-              </span>
+              </a>
               {/*
-              <span
-                onClick={() => handleNavClick('listings', 'two-wheelers')}
+              <a
+                href="/listings"
                 className={`cursor-pointer text-sm font-semibold tracking-wide transition-colors \${
                   currentPage === 'listings' && searchQuery === '' ? 'text-[#9acbff]' : 'text-[#c0c7d1] hover:text-[#9acbff]'
                 }`}
                 id="link-two-wheelers"
               >
                 Scooters & Bikes
-              </span>
-              <span
-                onClick={() => handleNavClick('listings', 'commercial')}
+              </a>
+              <a
+                href="/listings"
                 className={`cursor-pointer text-sm font-semibold tracking-wide transition-colors \${
                   currentPage === 'listings' ? 'text-[#9acbff]' : 'text-[#c0c7d1] hover:text-[#9acbff]'
                 }`}
                 id="link-commercial"
               >
                 Commercial
-              </span>
+              </a>
               */}
-              <span
-                onClick={() => handleNavClick('compare')}
+              <a
+                href="/compare"
                 className={`cursor-pointer text-sm font-semibold tracking-wide transition-colors ${
                   currentPage === 'compare' ? 'text-[#9acbff]' : 'text-[#c0c7d1] hover:text-[#9acbff]'
                 }`}
                 id="link-compare"
               >
                 Compare
-              </span>
-              <span
-                onClick={() => handleNavClick('consultation')}
+              </a>
+              <a
+                href="/consultation"
                 className={`cursor-pointer text-sm font-semibold tracking-wide transition-colors ${
                   currentPage === 'consultation' ? 'text-[#9acbff]' : 'text-[#c0c7d1] hover:text-[#9acbff]'
                 }`}
                 id="link-consultation"
               >
                 Consultation
-              </span>
-              <span
-                onClick={() => handleNavClick('blog')}
+              </a>
+              <a
+                href="/blog"
                 className={`cursor-pointer text-sm font-semibold tracking-wide transition-colors ${
                   currentPage === 'blog' ? 'text-[#9acbff]' : 'text-[#c0c7d1] hover:text-[#9acbff]'
                 }`}
                 id="link-blog"
               >
                 Blog
-              </span>
+              </a>
               
               {/* Interactive Tools dropdown panel */}
               <div 
