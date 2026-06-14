@@ -2,8 +2,8 @@ User-agent: *
 Allow: /
 
 # Exclude admin pages from search results
-Disallow: /?page=blog-admin
-Disallow: /*blog-admin*
+Disallow: /blog-admin
+Disallow: /car-admin
 
 # Sitemaps
-Sitemap: http://localhost:3000/sitemap.xml
+Sitemap: https://carzev.in/sitemap.xml

@@ -22,6 +22,31 @@ function ensureDirectoryExistence(filePath: string) {
   fs.mkdirSync(dirname);
 }
 
+const HEADER_HTML = `
+  <header style="padding: 20px; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center;">
+    <a href="/" style="font-weight: bold; text-decoration: none; color: #fff; font-size: 1.5rem;">CARZev</a>
+    <nav>
+      <a href="/" style="margin-left: 15px; color: #aaa; text-decoration: none;">Home</a>
+      <a href="/listings" style="margin-left: 15px; color: #aaa; text-decoration: none;">Catalogue</a>
+      <a href="/compare" style="margin-left: 15px; color: #aaa; text-decoration: none;">Compare</a>
+      <a href="/savings-calc" style="margin-left: 15px; color: #aaa; text-decoration: none;">Savings</a>
+      <a href="/emi-calc" style="margin-left: 15px; color: #aaa; text-decoration: none;">EMI</a>
+      <a href="/consultation" style="margin-left: 15px; color: #aaa; text-decoration: none;">Consultation</a>
+      <a href="/blog" style="margin-left: 15px; color: #aaa; text-decoration: none;">Blog</a>
+    </nav>
+  </header>
+`;
+
+const FOOTER_HTML = `
+  <footer style="margin-top: 50px; padding: 40px 20px; border-top: 1px solid #222; text-align: center; color: #666; font-size: 0.85rem;">
+    <p>&copy; 2026 CARZev India. All rights reserved.</p>
+    <div style="margin-top: 15px;">
+      <a href="/privacy" style="color: #666; text-decoration: none; margin: 0 10px;">Privacy Policy</a> | 
+      <a href="/terms" style="color: #666; text-decoration: none; margin: 0 10px;">Terms & Conditions</a>
+    </div>
+  </footer>
+`;
+
 // Helper to escape XML
 function escapeXml(unsafe: string): string {
   return unsafe.replace(/[<>&'"]/g, (c) => {
@@ -65,25 +90,36 @@ function runPrerender() {
     keywords: 'electric vehicles India, EV price India, best electric car, best electric scooter in India, EV range calculator, EV savings calculator',
     schema: {
       '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      'name': 'CARZev',
-      'url': `${PROD_ORIGIN}/`,
-      'potentialAction': {
-        '@type': 'SearchAction',
-        'target': `${PROD_ORIGIN}/listings?q={search_term_string}`,
-        'query-input': 'required name=search_term_string'
-      }
+      '@graph': [
+        {
+          '@type': 'WebSite',
+          '@id': `${PROD_ORIGIN}/#website`,
+          'name': 'CARZev',
+          'url': `${PROD_ORIGIN}/`,
+          'potentialAction': {
+            '@type': 'SearchAction',
+            'target': `${PROD_ORIGIN}/listings?q={search_term_string}`,
+            'query-input': 'required name=search_term_string'
+          }
+        },
+        {
+          '@type': 'Organization',
+          '@id': `${PROD_ORIGIN}/#organization`,
+          'name': 'CARZev',
+          'url': `${PROD_ORIGIN}/`,
+          'logo': {
+            '@type': 'ImageObject',
+            'url': `${PROD_ORIGIN}/favicon.png`,
+            'width': 112,
+            'height': 112
+          },
+          'sameAs': [
+            'https://github.com/reachout2utkarshsingh/carzev'
+          ]
+        }
+      ]
     },
     bodyHtml: `
-      <header>
-        <img src="/images/logo.webp" alt="CARZev Logo" />
-        <nav>
-          <a href="/listings">Electric Cars</a>
-          <a href="/compare">Compare Hub</a>
-          <a href="/consultation">Expert Consultation</a>
-          <a href="/blog">EV News Blog</a>
-        </nav>
-      </header>
       <main>
         <h1>Find Your Perfect Electric Vehicle in India</h1>
         <p>Explore India's most comprehensive database of EVs. Compare ex-showroom prices, certified range, charging times, and state road tax subsidies.</p>
@@ -110,7 +146,6 @@ function runPrerender() {
       'url': `${PROD_ORIGIN}/listings`
     },
     bodyHtml: `
-      <header><img src="/images/logo.webp" alt="CARZev Logo" /></header>
       <main>
         <h1>Electric Vehicles Catalogue</h1>
         <p>Search and filter through all available electric cars, scooters, and motorcycles in India.</p>
@@ -134,7 +169,6 @@ function runPrerender() {
     keywords: 'compare electric cars, ev comparison tool, nexon ev vs mg zs ev, curvv ev vs punch ev',
     schema: null,
     bodyHtml: `
-      <header><img src="/images/logo.webp" alt="CARZev Logo" /></header>
       <main>
         <h1>Compare Electric Vehicles Side-by-Side</h1>
         <p>Select multiple electric models from our database and compare their technical specifications side-by-side.</p>
@@ -523,7 +557,7 @@ function runPrerender() {
     modifiedHtml = modifiedHtml.replace('<head>', `<head>${seoHeadTags}`);
 
     // 3. Inject semantic body HTML outline inside the root container for crawler indexability
-    modifiedHtml = modifiedHtml.replace('<div id="root"></div>', `<div id="root">${p.bodyHtml}</div>`);
+    modifiedHtml = modifiedHtml.replace('<div id="root"></div>', `<div id="root">${HEADER_HTML}${p.bodyHtml}${FOOTER_HTML}</div>`);
 
     // Write file
     const targetFilePath = path.join(DIST_DIR, p.route, 'index.html');

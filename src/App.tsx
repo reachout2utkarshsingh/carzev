@@ -167,14 +167,34 @@ export default function App() {
     if (currentPage === 'home') {
       schemaData = {
         '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        'name': 'CARZev',
-        'url': 'https://carzev.in/',
-        'potentialAction': {
-          '@type': 'SearchAction',
-          'target': 'https://carzev.in/listings?q={search_term_string}',
-          'query-input': 'required name=search_term_string'
-        }
+        '@graph': [
+          {
+            '@type': 'WebSite',
+            '@id': 'https://carzev.in/#website',
+            'name': 'CARZev',
+            'url': 'https://carzev.in/',
+            'potentialAction': {
+              '@type': 'SearchAction',
+              'target': 'https://carzev.in/listings?q={search_term_string}',
+              'query-input': 'required name=search_term_string'
+            }
+          },
+          {
+            '@type': 'Organization',
+            '@id': 'https://carzev.in/#organization',
+            'name': 'CARZev',
+            'url': 'https://carzev.in/',
+            'logo': {
+              '@type': 'ImageObject',
+              'url': 'https://carzev.in/favicon.png',
+              'width': 112,
+              'height': 112
+            },
+            'sameAs': [
+              'https://github.com/reachout2utkarshsingh/carzev'
+            ]
+          }
+        ]
       };
     } else if (currentPage === 'listings') {
       title = 'Electric Vehicles Catalogue | Prices, Range & Specs | CARZev';
