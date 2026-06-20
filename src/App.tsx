@@ -141,7 +141,7 @@ const parseLocation = (): { page: PageType; selectedEVId: string; extraData?: an
     };
   }
 
-  return { page: 'home', selectedEVId: 'nexon-ev' };
+  return { page: 'not-found', selectedEVId: '' };
 };
 
 export default function App() {
@@ -649,9 +649,32 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-[#111317] text-white">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#00C896] mb-4"></div>
-        <p className="text-xs uppercase tracking-widest text-[#8b919b] font-semibold">Loading CARZev database...</p>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-[#111317] text-white p-4">
+        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-[#00C896] mb-6"></div>
+        <h1 className="text-2xl md:text-3xl font-bold mb-3 text-center">CARZev Database - Electric Vehicles India</h1>
+        <p className="text-xs uppercase tracking-widest text-[#8b919b] font-semibold mb-6">Loading CARZev database...</p>
+        
+        <div className="text-center text-sm text-gray-400 max-w-2xl">
+          <p className="mb-4 text-base">Your most comprehensive database for electric vehicles in India. Compare EV prices, certified battery ranges, technical specifications, calculate EV EMI plans, and discover fuel savings.</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left bg-[#1a1c23] p-6 rounded-xl border border-gray-800 mb-8 w-full max-w-lg mx-auto">
+            <div>
+              <h2 className="text-[#00C896] font-semibold mb-2">Access & Coverage</h2>
+              <p className="text-xs">Database covers all electric cars, scooters, and bikes currently available in India with live on-road prices and FAME subsidies.</p>
+            </div>
+            <div>
+              <h2 className="text-[#00C896] font-semibold mb-2">Update Frequency</h2>
+              <p className="text-xs">Prices and specifications are updated weekly by our automotive experts.</p>
+            </div>
+          </div>
+          
+          <div className="flex flex-wrap justify-center gap-6 text-[#00C896] font-medium">
+            <a href="/" className="hover:text-white transition-colors">Home</a>
+            <a href="/consultation" className="hover:text-white transition-colors">Contact</a>
+            <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="/terms" className="hover:text-white transition-colors">Terms of Use</a>
+          </div>
+        </div>
       </div>
     );
   }
@@ -878,8 +901,21 @@ export default function App() {
             onSelectEV={handleSelectEV}
           />
         );
+      case 'not-found':
       default:
-        return <div>Reviewing parameters...</div>;
+        return (
+          <div className="flex flex-col items-center justify-center min-h-[70vh] bg-[#111317] text-white text-center p-6 mt-16">
+            <h1 className="text-6xl font-extrabold mb-4 text-[#00C896]">404</h1>
+            <h2 className="text-2xl font-bold mb-4">Page Not Found</h2>
+            <p className="text-gray-400 mb-8 max-w-md mx-auto">Oops! The electric vehicle or page you are looking for does not exist in our CARZev database.</p>
+            <a href="/" className="bg-[#00C896] text-[#002116] px-8 py-3 rounded-full font-bold hover:bg-[#00e3aa] transition-colors shadow-lg">Return Home</a>
+            <div className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-gray-500">
+              <a href="/listings" className="hover:text-[#00C896] transition-colors">Browse EVs</a>
+              <a href="/compare" className="hover:text-[#00C896] transition-colors">Compare Cars</a>
+              <a href="/savings-calc" className="hover:text-[#00C896] transition-colors">Savings Calculator</a>
+            </div>
+          </div>
+        );
     }
   };
 
